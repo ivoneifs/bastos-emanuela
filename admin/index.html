@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<meta name="referrer" content="no-referrer">
+<title>Painel do blog — Emanuela Bastos</title>
+<link rel="icon" href="../images/favicon.webp">
+
+<style>
+  /* tela de espera enquanto o painel carrega */
+  html, body { margin: 0; height: 100%; background: #F7F5F0;
+               font-family: Inter, system-ui, -apple-system, 'Segoe UI', sans-serif; color: #2B352A; }
+  #carregando { position: fixed; inset: 0; display: grid; place-items: center; text-align: center; padding: 24px; }
+  #carregando .marca { width: 56px; height: 56px; margin: 0 auto 18px; border-radius: 50%;
+                       border: 1px solid #B08968; color: #B08968; display: grid; place-items: center;
+                       font-family: Georgia, serif; letter-spacing: .04em; }
+  #carregando h1 { font-family: Georgia, serif; font-weight: 400; font-size: 1.5rem; margin: 0 0 8px; }
+  #carregando p  { margin: 0; font-size: .9rem; color: #5A7055; max-width: 34ch; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<div id="carregando">
+  <div>
+    <div class="marca">EB</div>
+    <h1>Painel do blog</h1>
+    <p>Carregando o editor. Se esta tela não sair do lugar, verifique se o Netlify Identity está ativado no site.</p>
+  </div>
+</div>
+
+<!-- login (Netlify Identity) -->
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<!-- editor (Decap CMS) -->
+<script src="https://unpkg.com/decap-cms@^3.1.10/dist/decap-cms.js"></script>
+
+<script>
+  // some com a tela de espera assim que o painel aparecer
+  window.addEventListener('load', function () {
+    setTimeout(function () {
+      var espera = document.getElementById('carregando');
+      if (espera) espera.style.display = 'none';
+    }, 1200);
+  });
+</script>
+</body>
+</html>

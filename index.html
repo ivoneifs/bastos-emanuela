@@ -1,0 +1,1288 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Emanuela Bastos — Neuropsicóloga | CRP 03/11614 | Irecê, BA</title>
+<meta name="description" content="Emanuela Bastos, neuropsicóloga (CRP 03/11614). Atendimento psicológico on-line e presencial em Irecê e região, na Bahia. Um espaço de escuta cuidadosa para ansiedade, autoconhecimento, relacionamentos e burnout.">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="canonical" href="https://emanuelabasttos-spec.github.io/bastos/">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:site_name" content="Emanuela Bastos — Neuropsicóloga">
+<meta property="og:title" content="Emanuela Bastos — Neuropsicóloga | CRP 03/11614">
+<meta property="og:description" content="Atendimento psicológico on-line e presencial em Irecê e região, na Bahia. Escuta cuidadosa, ética e sem julgamentos.">
+<meta property="og:url" content="https://emanuelabasttos-spec.github.io/bastos/">
+<meta property="og:image" content="https://emanuelabasttos-spec.github.io/bastos/images/emanuela-hero.webp">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#F7F5F0">
+<link rel="icon" href="images/favicon.webp">
+
+<!-- Tipografia -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<!-- Tailwind CSS (CDN) -->
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          /* fundos claros */
+          areia:  '#F7F5F0',
+          areia2: '#EFEBE3',
+          /* verde sálvia — cor principal */
+          salvia: {
+            50:  '#F1F4EF',
+            100: '#E3EAE0',
+            200: '#C8D4C4',
+            300: '#A9BBA4',
+            400: '#8AA184',
+            500: '#6F8869',   /* botões / destaque */
+            600: '#5A7055',
+            700: '#475A44',
+            800: '#364534',
+          },
+          /* verde bem fechado — textos */
+          grafite: '#2B352A',
+          /* detalhe terroso suave */
+          terra:  '#B08968',
+        },
+        fontFamily: {
+          serif: ['"Playfair Display"', 'Georgia', 'serif'],
+          sans:  ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+        },
+        maxWidth: { prosa: '62ch' },
+        keyframes: {
+          /* pulso suave do botão de WhatsApp */
+          pulsoSuave: {
+            '0%':   { boxShadow: '0 0 0 0 rgba(37,211,102,.45)' },
+            '70%':  { boxShadow: '0 0 0 16px rgba(37,211,102,0)' },
+            '100%': { boxShadow: '0 0 0 0 rgba(37,211,102,0)' },
+          },
+          subir: {
+            from: { opacity: '0', transform: 'translateY(20px)' },
+            to:   { opacity: '1', transform: 'none' },
+          },
+        },
+        animation: {
+          pulsoSuave: 'pulsoSuave 2.8s cubic-bezier(.4,0,.6,1) infinite',
+          subir: 'subir .7s cubic-bezier(.2,.7,.3,1) both',
+        },
+      },
+    },
+  };
+</script>
+
+<!-- Ícones Lucide -->
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script>
+<!-- Conversor de Markdown: usado só para os textos escritos no painel -->
+<script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js" defer></script>
+
+<style>
+  html { scroll-behavior: smooth; scroll-padding-top: 88px; }
+  body { -webkit-font-smoothing: antialiased; }
+
+  /* revelação suave ao rolar a página.
+     Só esconde quando o JS está ativo — sem JS, tudo aparece normalmente. */
+  .js .revelar { opacity: 0; transform: translateY(22px);
+                 transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.3,1); }
+  .js .revelar.visivel { opacity: 1; transform: none; }
+
+  /* acordeão do FAQ */
+  .faq-corpo { max-height: 0; overflow: hidden;
+               transition: max-height .4s cubic-bezier(.2,.7,.3,1); }
+  .faq-item[data-aberto="true"] .faq-corpo { max-height: 280px; }
+  .faq-item[data-aberto="true"] .faq-seta  { transform: rotate(180deg); }
+
+  /* respeita quem prefere menos movimento */
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .js .revelar { opacity: 1; transform: none; transition: none; }
+    .animate-pulsoSuave, .animate-subir { animation: none !important; }
+    * { transition-duration: .01ms !important; }
+  }
+
+  /* leitor de artigos do blog */
+  .artigo p { margin-bottom: 1.1em; }
+  .artigo p:last-child { margin-bottom: 0; }
+  /* o painel gera ## como h2; o HTML fixo usa h3 — os dois recebem o mesmo estilo */
+  .artigo h2, .artigo h3, .artigo h4 {
+               font-family: 'Playfair Display', Georgia, serif; font-weight: 400; font-size: 1.35rem;
+               line-height: 1.3; color: #2B352A; margin: 2em 0 .7em; }
+  .artigo > :first-child { margin-top: 0; }
+  .artigo ul { margin: 0 0 1.1em 1.1em; list-style: disc; }
+  .artigo li { margin-bottom: .5em; padding-left: .3em; }
+  .artigo strong { font-weight: 600; color: #2B352A; }
+  body.leitor-aberto { overflow: hidden; }
+
+  /* foco visível em toda a página */
+  :focus-visible { outline: 2px solid #6F8869; outline-offset: 3px; border-radius: 6px; }
+</style>
+</head>
+
+<script>document.documentElement.classList.add('js');</script>
+<body class="bg-areia font-sans text-grafite antialiased">
+
+<!-- pular para o conteúdo (acessibilidade) -->
+<a href="#hero" class="sr-only focus:not-sr-only focus:absolute focus:z-[100] focus:m-4 focus:rounded-full focus:bg-salvia-600 focus:px-5 focus:py-3 focus:text-white">
+  Ir para o conteúdo
+</a>
+
+<!-- ═══════════════════ 1. HEADER / MENU FIXO ═══════════════════ -->
+<header id="cabecalho"
+        class="fixed inset-x-0 top-0 z-50 border-b border-transparent transition-all duration-300">
+  <div class="mx-auto flex max-w-6xl items-center gap-6 px-5 py-4 sm:px-8">
+
+    <!-- identidade -->
+    <a href="#hero" class="mr-auto flex items-center gap-3" aria-label="Emanuela Bastos, neuropsicóloga — início">
+      <span class="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-terra/60 font-serif text-sm text-terra">
+        EB
+      </span>
+      <span class="leading-tight">
+        <span class="block font-serif text-lg text-grafite">Emanuela Bastos</span>
+        <span class="block text-[11px] font-medium uppercase tracking-[0.18em] text-salvia-600">
+          Neuropsicóloga · CRP 03/11614
+        </span>
+      </span>
+    </a>
+
+    <!-- navegação (desktop) -->
+    <nav class="hidden items-center gap-8 lg:flex" aria-label="Navegação principal">
+      <a href="#areas"     class="text-sm text-salvia-700 transition-colors hover:text-grafite">Áreas de atuação</a>
+      <a href="#sobre"     class="text-sm text-salvia-700 transition-colors hover:text-grafite">Sobre mim</a>
+      <a href="#agendamento" class="text-sm text-salvia-700 transition-colors hover:text-grafite">Como funciona</a>
+      <a href="#blog"      class="text-sm text-salvia-700 transition-colors hover:text-grafite">Blog</a>
+      <a href="#faq"       class="text-sm text-salvia-700 transition-colors hover:text-grafite">Dúvidas</a>
+    </nav>
+
+    <!-- CTA principal (desktop) -->
+    <a href="https://wa.me/5574981249127?text=Ol%C3%A1%2C%20Emanuela.%20Vim%20pelo%20site%20e%20gostaria%20de%20agendar%20uma%20sess%C3%A3o."
+       target="_blank" rel="noopener"
+       class="hidden items-center gap-2 rounded-full bg-salvia-500 px-6 py-3 text-xs font-semibold uppercase tracking-[0.12em] text-white shadow-lg shadow-salvia-500/25 transition-all duration-300 hover:-translate-y-0.5 hover:bg-salvia-600 hover:shadow-xl hover:shadow-salvia-500/30 lg:inline-flex">
+      <i data-lucide="message-circle" class="h-4 w-4"></i>
+      Agendar sessão
+    </a>
+
+    <!-- botão do menu (mobile) -->
+    <button id="btn-menu" type="button" aria-expanded="false" aria-controls="menu-mobile"
+            class="grid h-11 w-11 place-items-center rounded-full border border-salvia-200 text-grafite transition-colors hover:bg-salvia-50 lg:hidden">
+      <i data-lucide="menu" class="h-5 w-5" id="icone-menu"></i>
+      <span class="sr-only">Abrir menu</span>
+    </button>
+  </div>
+
+  <!-- menu (mobile) -->
+  <div id="menu-mobile" class="hidden border-t border-salvia-100 bg-areia lg:hidden">
+    <nav class="mx-auto flex max-w-6xl flex-col px-5 py-2 sm:px-8" aria-label="Navegação">
+      <a href="#areas"       class="border-b border-salvia-100 py-4 font-serif text-lg">Áreas de atuação</a>
+      <a href="#sobre"       class="border-b border-salvia-100 py-4 font-serif text-lg">Sobre mim</a>
+      <a href="#agendamento" class="border-b border-salvia-100 py-4 font-serif text-lg">Como funciona</a>
+      <a href="#blog"        class="border-b border-salvia-100 py-4 font-serif text-lg">Blog</a>
+      <a href="#faq"         class="border-b border-salvia-100 py-4 font-serif text-lg">Dúvidas frequentes</a>
+      <a href="https://wa.me/5574981249127?text=Ol%C3%A1%2C%20Emanuela.%20Vim%20pelo%20site%20e%20gostaria%20de%20agendar%20uma%20sess%C3%A3o."
+         target="_blank" rel="noopener"
+         class="my-5 inline-flex items-center justify-center gap-2 rounded-full bg-salvia-500 px-6 py-3.5 text-xs font-semibold uppercase tracking-[0.12em] text-white">
+        <i data-lucide="message-circle" class="h-4 w-4"></i>
+        Agendar sessão
+      </a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<!-- ═══════════════════ 2. HERO ═══════════════════ -->
+<section id="hero" class="relative overflow-hidden bg-areia pt-28 pb-16 sm:pt-36 lg:pt-44 lg:pb-24">
+  <!-- textura suave de fundo -->
+  <div aria-hidden="true"
+       class="pointer-events-none absolute -right-40 -top-40 h-[540px] w-[540px] rounded-full bg-salvia-100/60 blur-3xl"></div>
+  <div aria-hidden="true"
+       class="pointer-events-none absolute -bottom-52 -left-40 h-[460px] w-[460px] rounded-full bg-terra/10 blur-3xl"></div>
+
+  <div class="relative mx-auto grid max-w-6xl items-center gap-12 px-5 sm:px-8 lg:grid-cols-2 lg:gap-16">
+
+    <!-- texto -->
+    <div class="animate-subir">
+      <p class="mb-6 flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-terra">
+        Neuropsicologia
+        <span class="h-px w-12 bg-terra/40"></span>
+      </p>
+
+      <h1 class="font-serif text-4xl leading-[1.1] text-grafite sm:text-5xl lg:text-6xl">
+        Um espaço para você<br>
+        <span class="italic text-salvia-600">colocar as coisas no lugar.</span>
+      </h1>
+
+      <p class="mt-7 max-w-prosa text-base leading-relaxed text-salvia-800/80 sm:text-lg">
+        A terapia é um encontro reservado, no seu tempo, para olhar com calma para o que
+        vem incomodando. Aqui você fala sem pressa e sem julgamento, e a gente organiza
+        junto o que hoje parece confuso.
+      </p>
+
+      <p class="mt-4 text-sm text-salvia-700">
+        Atendimento on-line e presencial · Irecê e região, BA
+      </p>
+
+      <div class="mt-9 flex flex-wrap gap-4">
+        <a href="https://wa.me/5574981249127?text=Ol%C3%A1%2C%20Emanuela.%20Vim%20pelo%20site%20e%20gostaria%20de%20agendar%20uma%20sess%C3%A3o."
+           target="_blank" rel="noopener"
+           class="inline-flex items-center gap-2 rounded-full bg-salvia-500 px-7 py-4 text-xs font-semibold uppercase tracking-[0.12em] text-white shadow-lg shadow-salvia-500/25 transition-all duration-300 hover:-translate-y-0.5 hover:bg-salvia-600 hover:shadow-xl hover:shadow-salvia-500/30">
+          <i data-lucide="message-circle" class="h-4 w-4"></i>
+          Agendar uma sessão
+        </a>
+        <a href="#agendamento"
+           class="inline-flex items-center gap-2 rounded-full border border-salvia-300 bg-white/60 px-7 py-4 text-xs font-semibold uppercase tracking-[0.12em] text-salvia-700 transition-all duration-300 hover:-translate-y-0.5 hover:border-salvia-500 hover:text-grafite">
+          Como funciona
+          <i data-lucide="arrow-right" class="h-4 w-4"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- imagem -->
+    <figure class="relative mx-auto w-full max-w-md lg:max-w-none">
+      <div aria-hidden="true"
+           class="absolute -bottom-5 -right-5 h-2/3 w-2/3 rounded-[2rem] border border-terra/40"></div>
+      <img src="images/emanuela-hero.webp" width="1200" height="1599"
+           alt="Emanuela Bastos, neuropsicóloga, no consultório, apoiada sobre manuais de testes."
+           fetchpriority="high" decoding="async"
+           class="relative w-full rounded-[2rem] object-cover shadow-2xl shadow-salvia-800/15">
+
+      <figcaption class="absolute -left-3 bottom-8 max-w-[13rem] rounded-2xl bg-white/95 p-5 shadow-xl backdrop-blur-sm sm:-left-6">
+        <p class="font-serif text-2xl leading-none text-salvia-600">50 min</p>
+        <p class="mt-2 text-xs leading-snug text-salvia-800/70">
+          É o tempo de cada sessão, no consultório ou por vídeo.
+        </p>
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ═══════════════════ 3. FRASE DE IMPACTO ═══════════════════ -->
+<section class="bg-salvia-800 py-16 sm:py-20">
+  <div class="mx-auto max-w-3xl px-5 text-center sm:px-8">
+    <i data-lucide="quote" class="mx-auto mb-7 h-8 w-8 text-terra/70" aria-hidden="true"></i>
+    <blockquote class="revelar">
+      <p class="font-serif text-2xl italic leading-snug text-areia sm:text-3xl lg:text-4xl">
+        “Quem olha para fora, sonha. Quem olha para dentro, desperta.”
+      </p>
+      <footer class="mt-6 text-xs font-medium uppercase tracking-[0.22em] text-salvia-200">
+        Carl Gustav Jung
+      </footer>
+    </blockquote>
+  </div>
+</section>
+
+<!-- ═══════════════════ 4. ÁREAS DE ATUAÇÃO ═══════════════════ -->
+<section id="areas" class="bg-areia py-20 sm:py-28">
+  <div class="mx-auto max-w-6xl px-5 sm:px-8">
+
+    <div class="revelar max-w-prosa">
+      <p class="mb-5 flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-terra">
+        Áreas de atuação
+        <span class="h-px w-12 bg-terra/40"></span>
+      </p>
+      <h2 class="font-serif text-3xl leading-tight text-grafite sm:text-4xl lg:text-5xl">
+        Assuntos que costumam abrir uma conversa.
+      </h2>
+      <p class="mt-5 text-base leading-relaxed text-salvia-800/75">
+        Você não precisa chegar com o problema já nomeado. Se algo vem pesando, isso já
+        basta para começarmos.
+      </p>
+    </div>
+
+    <div class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+
+      <!-- card: ansiedade -->
+      <article class="revelar group rounded-3xl border border-salvia-100 bg-white p-8 shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:border-salvia-200 hover:shadow-xl hover:shadow-salvia-800/10">
+        <div class="mb-6 grid h-12 w-12 place-items-center rounded-2xl bg-salvia-50 text-salvia-600 transition-colors duration-300 group-hover:bg-salvia-500 group-hover:text-white">
+          <i data-lucide="wind" class="h-5 w-5"></i>
+        </div>
+        <h3 class="font-serif text-xl text-grafite">Ansiedade</h3>
+        <p class="mt-3 text-sm leading-relaxed text-salvia-800/75">
+          Preocupação constante, corpo em alerta, dificuldade de desligar. Trabalhamos
+          formas de reconhecer os gatilhos e recuperar o próprio ritmo.
+        </p>
+      </article>
+
+      <!-- card: depressão -->
+      <article class="revelar group rounded-3xl border border-salvia-100 bg-white p-8 shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:border-salvia-200 hover:shadow-xl hover:shadow-salvia-800/10">
+        <div class="mb-6 grid h-12 w-12 place-items-center rounded-2xl bg-salvia-50 text-salvia-600 transition-colors duration-300 group-hover:bg-salvia-500 group-hover:text-white">
+          <i data-lucide="cloud-rain" class="h-5 w-5"></i>
+        </div>
+        <h3 class="font-serif text-xl text-grafite">Depressão</h3>
+        <p class="mt-3 text-sm leading-relaxed text-salvia-800/75">
+          Falta de energia, desânimo, perda de interesse pelo que antes fazia sentido.
+          Um espaço para entender esse estado e retomar o contato com a vida.
+        </p>
+      </article>
+
+      <!-- card: relacionamentos -->
+      <article class="revelar group rounded-3xl border border-salvia-100 bg-white p-8 shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:border-salvia-200 hover:shadow-xl hover:shadow-salvia-800/10">
+        <div class="mb-6 grid h-12 w-12 place-items-center rounded-2xl bg-salvia-50 text-salvia-600 transition-colors duration-300 group-hover:bg-salvia-500 group-hover:text-white">
+          <i data-lucide="users" class="h-5 w-5"></i>
+        </div>
+        <h3 class="font-serif text-xl text-grafite">Relacionamentos</h3>
+        <p class="mt-3 text-sm leading-relaxed text-salvia-800/75">
+          Conflitos que se repetem, dificuldade de colocar limites, distanciamento na
+          família ou no casal. Olhamos juntos para os padrões que se formaram.
+        </p>
+      </article>
+
+      <!-- card: burnout -->
+      <article class="revelar group rounded-3xl border border-salvia-100 bg-white p-8 shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:border-salvia-200 hover:shadow-xl hover:shadow-salvia-800/10">
+        <div class="mb-6 grid h-12 w-12 place-items-center rounded-2xl bg-salvia-50 text-salvia-600 transition-colors duration-300 group-hover:bg-salvia-500 group-hover:text-white">
+          <i data-lucide="battery-low" class="h-5 w-5"></i>
+        </div>
+        <h3 class="font-serif text-xl text-grafite">Burnout e esgotamento</h3>
+        <p class="mt-3 text-sm leading-relaxed text-salvia-800/75">
+          Exaustão que o fim de semana não resolve, irritação fácil, sensação de estar
+          sempre devendo. Um lugar para revisar limites e prioridades.
+        </p>
+      </article>
+
+      <!-- card: autoconhecimento -->
+      <article class="revelar group rounded-3xl border border-salvia-100 bg-white p-8 shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:border-salvia-200 hover:shadow-xl hover:shadow-salvia-800/10">
+        <div class="mb-6 grid h-12 w-12 place-items-center rounded-2xl bg-salvia-50 text-salvia-600 transition-colors duration-300 group-hover:bg-salvia-500 group-hover:text-white">
+          <i data-lucide="compass" class="h-5 w-5"></i>
+        </div>
+        <h3 class="font-serif text-xl text-grafite">Autoconhecimento</h3>
+        <p class="mt-3 text-sm leading-relaxed text-salvia-800/75">
+          Entender as próprias escolhas, reconhecer o que se repete e ganhar clareza para
+          decidir — mesmo quando não há uma queixa específica.
+        </p>
+      </article>
+
+      <!-- card: insônia -->
+      <article class="revelar group rounded-3xl border border-salvia-100 bg-white p-8 shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:border-salvia-200 hover:shadow-xl hover:shadow-salvia-800/10">
+        <div class="mb-6 grid h-12 w-12 place-items-center rounded-2xl bg-salvia-50 text-salvia-600 transition-colors duration-300 group-hover:bg-salvia-500 group-hover:text-white">
+          <i data-lucide="moon" class="h-5 w-5"></i>
+        </div>
+        <h3 class="font-serif text-xl text-grafite">Insônia</h3>
+        <p class="mt-3 text-sm leading-relaxed text-salvia-800/75">
+          Noites em claro, pensamento acelerado na hora de dormir, cansaço que se acumula.
+          Investigamos o que sustenta esse ciclo no dia a dia.
+        </p>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ 5. SOBRE A PSICÓLOGA ═══════════════════ -->
+<section id="sobre" class="bg-areia2 py-20 sm:py-28">
+  <div class="mx-auto grid max-w-6xl items-center gap-12 px-5 sm:px-8 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
+
+    <figure class="revelar relative mx-auto w-full max-w-sm lg:max-w-none">
+      <div aria-hidden="true"
+           class="absolute -left-5 -top-5 h-2/3 w-2/3 rounded-[2rem] border border-salvia-300"></div>
+      <img src="images/emanuela-sobre.webp" width="900" height="1199" loading="lazy" decoding="async"
+           alt="Emanuela Bastos em seu consultório."
+           class="relative w-full rounded-[2rem] object-cover shadow-2xl shadow-salvia-800/15">
+    </figure>
+
+    <div class="revelar">
+      <p class="mb-5 flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-terra">
+        Sobre mim
+        <span class="h-px w-12 bg-terra/40"></span>
+      </p>
+      <h2 class="font-serif text-3xl leading-tight text-grafite sm:text-4xl lg:text-5xl">
+        Prazer, eu sou a Emanuela.
+      </h2>
+
+      <div class="mt-6 space-y-4 text-base leading-relaxed text-salvia-800/80">
+        <p>
+          Sou neuropsicóloga, inscrita no CRP 03/11614, e atendo adolescentes, adultos e idosos
+          em Irecê e região, na Bahia — de forma presencial e também por vídeo.
+        </p>
+        <p>
+          Meu trabalho começa pela escuta. Antes de qualquer proposta, eu preciso entender
+          a sua história, o seu contexto e o que te trouxe até aqui. A partir daí,
+          construímos juntos um caminho de acompanhamento, com objetivos combinados e
+          revisados ao longo do processo.
+        </p>
+        <p>
+          Além do acompanhamento clínico, também realizo avaliação neuropsicológica, com
+          instrumentos aplicados de acordo com a idade e a demanda de cada pessoa.
+        </p>
+      </div>
+
+      <ul class="mt-8 grid gap-3 sm:grid-cols-2">
+        <li class="flex items-start gap-3 text-sm text-salvia-800/80">
+          <i data-lucide="graduation-cap" class="mt-0.5 h-4 w-4 shrink-0 text-terra"></i>
+          <span>Graduação em Psicologia — UNIME, 2012</span>
+        </li>
+        <li class="flex items-start gap-3 text-sm text-salvia-800/80">
+          <i data-lucide="graduation-cap" class="mt-0.5 h-4 w-4 shrink-0 text-terra"></i>
+          <span>Especialização em Neuropsicologia — Realiza</span>
+        </li>
+        <li class="flex items-start gap-3 text-sm text-salvia-800/80">
+          <i data-lucide="book-open" class="mt-0.5 h-4 w-4 shrink-0 text-terra"></i>
+          <span>Especialização em Terapia Cognitivo-Comportamental — Realiza</span>
+        </li>
+        <li class="flex items-start gap-3 text-sm text-salvia-800/80">
+          <i data-lucide="shield-check" class="mt-0.5 h-4 w-4 shrink-0 text-terra"></i>
+          <span>Sigilo garantido pelo Código de Ética Profissional</span>
+        </li>
+      </ul>
+
+      <a href="https://wa.me/5574981249127?text=Ol%C3%A1%2C%20Emanuela.%20Vim%20pelo%20site%20e%20gostaria%20de%20conversar%20sobre%20o%20atendimento."
+         target="_blank" rel="noopener"
+         class="mt-9 inline-flex items-center gap-2 rounded-full bg-salvia-500 px-7 py-4 text-xs font-semibold uppercase tracking-[0.12em] text-white shadow-lg shadow-salvia-500/25 transition-all duration-300 hover:-translate-y-0.5 hover:bg-salvia-600">
+        <i data-lucide="message-circle" class="h-4 w-4"></i>
+        Conversar comigo
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ 6. COMO FUNCIONA O AGENDAMENTO ═══════════════════ -->
+<section id="agendamento" class="bg-areia py-20 sm:py-28">
+  <div class="mx-auto max-w-6xl px-5 sm:px-8">
+
+    <div class="revelar max-w-prosa">
+      <p class="mb-5 flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-terra">
+        Como funciona
+        <span class="h-px w-12 bg-terra/40"></span>
+      </p>
+      <h2 class="font-serif text-3xl leading-tight text-grafite sm:text-4xl lg:text-5xl">
+        Agendar é simples — em três passos.
+      </h2>
+      <p class="mt-5 text-base leading-relaxed text-salvia-800/75">
+        O atendimento acontece <strong class="font-medium text-grafite">presencialmente,
+        no consultório, ou on-line por vídeo</strong> — você escolhe o formato que couber
+        melhor na sua rotina.
+      </p>
+    </div>
+
+    <ol class="mt-14 grid gap-6 md:grid-cols-3">
+
+      <!-- passo 1 -->
+      <li class="revelar group relative rounded-3xl border border-salvia-100 bg-white p-8 shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:shadow-salvia-800/10">
+        <span class="absolute right-7 top-7 font-serif text-4xl text-salvia-100 transition-colors duration-300 group-hover:text-salvia-200">01</span>
+        <div class="mb-6 grid h-12 w-12 place-items-center rounded-2xl bg-salvia-50 text-salvia-600 transition-colors duration-300 group-hover:bg-salvia-500 group-hover:text-white">
+          <i data-lucide="message-square-text" class="h-5 w-5"></i>
+        </div>
+        <h3 class="font-serif text-xl text-grafite">Entre em contato pelo WhatsApp</h3>
+        <p class="mt-3 text-sm leading-relaxed text-salvia-800/75">
+          Me mande uma mensagem contando, em poucas linhas, o que te levou a procurar
+          terapia. Respondo pessoalmente e tiro as dúvidas iniciais.
+        </p>
+      </li>
+
+      <!-- passo 2 -->
+      <li class="revelar group relative rounded-3xl border border-salvia-100 bg-white p-8 shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:shadow-salvia-800/10">
+        <span class="absolute right-7 top-7 font-serif text-4xl text-salvia-100 transition-colors duration-300 group-hover:text-salvia-200">02</span>
+        <div class="mb-6 grid h-12 w-12 place-items-center rounded-2xl bg-salvia-50 text-salvia-600 transition-colors duration-300 group-hover:bg-salvia-500 group-hover:text-white">
+          <i data-lucide="calendar-check" class="h-5 w-5"></i>
+        </div>
+        <h3 class="font-serif text-xl text-grafite">Agende a sua sessão</h3>
+        <p class="mt-3 text-sm leading-relaxed text-salvia-800/75">
+          Combinamos o dia, o horário e o formato — presencial ou on-line. Você recebe a
+          confirmação com todas as orientações antes do encontro.
+        </p>
+      </li>
+
+      <!-- passo 3 -->
+      <li class="revelar group relative rounded-3xl border border-salvia-100 bg-white p-8 shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:shadow-salvia-800/10">
+        <span class="absolute right-7 top-7 font-serif text-4xl text-salvia-100 transition-colors duration-300 group-hover:text-salvia-200">03</span>
+        <div class="mb-6 grid h-12 w-12 place-items-center rounded-2xl bg-salvia-50 text-salvia-600 transition-colors duration-300 group-hover:bg-salvia-500 group-hover:text-white">
+          <i data-lucide="armchair" class="h-5 w-5"></i>
+        </div>
+        <h3 class="font-serif text-xl text-grafite">Pronto: sessão agendada</h3>
+        <p class="mt-3 text-sm leading-relaxed text-salvia-800/75">
+          A sessão dura cerca de 50 minutos e acontece de forma tranquila, no consultório
+          ou on-line. Não é preciso preparar nada — só chegar.
+        </p>
+      </li>
+    </ol>
+
+    <!-- escolha do formato da sessão -->
+    <div class="revelar mt-10 rounded-3xl border border-salvia-100 bg-white p-7 shadow-sm sm:p-9">
+      <div class="flex flex-col gap-7 lg:flex-row lg:items-center lg:justify-between">
+        <div class="max-w-prosa">
+          <h3 class="font-serif text-xl text-grafite">Como você prefere ser atendida ou atendido?</h3>
+          <p class="mt-2 text-sm leading-relaxed text-salvia-800/75">
+            A sessão por vídeo acontece pelo próprio WhatsApp, em videochamada, com a mesma
+            duração e o mesmo sigilo da sessão presencial. Escolha abaixo e já me diga na
+            mensagem — assim eu reservo o horário no formato certo.
+          </p>
+        </div>
+
+        <div class="flex shrink-0 flex-col gap-3 sm:flex-row lg:flex-col xl:flex-row">
+          <a href="https://wa.me/5574981249127?text=Ol%C3%A1%2C%20Emanuela.%20Vim%20pelo%20site%20e%20gostaria%20de%20agendar%20uma%20sess%C3%A3o%20por%20v%C3%ADdeo%20(videochamada)."
+             target="_blank" rel="noopener"
+             class="inline-flex items-center justify-center gap-2 rounded-full bg-salvia-500 px-6 py-3.5 text-xs font-semibold uppercase tracking-[0.12em] text-white shadow-lg shadow-salvia-500/25 transition-all duration-300 hover:-translate-y-0.5 hover:bg-salvia-600">
+            <i data-lucide="video" class="h-4 w-4"></i>
+            Sessão por vídeo
+          </a>
+          <a href="https://wa.me/5574981249127?text=Ol%C3%A1%2C%20Emanuela.%20Vim%20pelo%20site%20e%20gostaria%20de%20agendar%20uma%20sess%C3%A3o%20presencial%20no%20consult%C3%B3rio."
+             target="_blank" rel="noopener"
+             class="inline-flex items-center justify-center gap-2 rounded-full border border-salvia-300 px-6 py-3.5 text-xs font-semibold uppercase tracking-[0.12em] text-salvia-700 transition-all duration-300 hover:-translate-y-0.5 hover:border-salvia-500 hover:text-grafite">
+            <i data-lucide="map-pin" class="h-4 w-4"></i>
+            Sessão presencial
+          </a>
+        </div>
+      </div>
+
+      <p class="mt-6 flex items-start gap-2.5 border-t border-salvia-100 pt-5 text-xs leading-relaxed text-salvia-800/60">
+        <i data-lucide="lock" class="mt-0.5 h-3.5 w-3.5 shrink-0 text-terra"></i>
+        <span>
+          As videochamadas do WhatsApp são criptografadas de ponta a ponta e nenhuma sessão
+          é gravada. Para o atendimento on-line, escolha um lugar reservado e use fone de
+          ouvido.
+        </span>
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ 7. FAQ — DÚVIDAS FREQUENTES ═══════════════════ -->
+<section id="faq" class="bg-areia2 py-20 sm:py-28">
+  <div class="mx-auto max-w-3xl px-5 sm:px-8">
+
+    <div class="revelar">
+      <p class="mb-5 flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-terra">
+        Dúvidas frequentes
+        <span class="h-px w-12 bg-terra/40"></span>
+      </p>
+      <h2 class="font-serif text-3xl leading-tight text-grafite sm:text-4xl lg:text-5xl">
+        O que costumam me perguntar antes da primeira sessão.
+      </h2>
+    </div>
+
+    <div class="mt-12 space-y-4" id="faq-lista">
+
+      <!-- item 1 -->
+      <div class="faq-item overflow-hidden rounded-2xl border border-salvia-200 bg-white" data-aberto="false">
+        <h3>
+          <button type="button" aria-expanded="false" aria-controls="faq-corpo-1"
+                  class="flex w-full items-center justify-between gap-4 px-6 py-5 text-left font-serif text-lg text-grafite transition-colors hover:bg-salvia-50/60">
+            Você aceita convênio?
+            <i data-lucide="chevron-down" class="faq-seta h-5 w-5 shrink-0 text-salvia-500 transition-transform duration-300"></i>
+          </button>
+        </h3>
+        <div id="faq-corpo-1" class="faq-corpo">
+          <p class="px-6 pb-6 text-sm leading-relaxed text-salvia-800/75">
+            O atendimento é particular. Ao final de cada sessão eu emito recibo, e você pode
+            usá-lo para solicitar reembolso ao seu plano de saúde, quando houver essa
+            previsão no contrato. Se a operadora pedir algum documento adicional, é só me
+            avisar que eu providencio.
+          </p>
+        </div>
+      </div>
+
+      <!-- item 2 -->
+      <div class="faq-item overflow-hidden rounded-2xl border border-salvia-200 bg-white" data-aberto="false">
+        <h3>
+          <button type="button" aria-expanded="false" aria-controls="faq-corpo-2"
+                  class="flex w-full items-center justify-between gap-4 px-6 py-5 text-left font-serif text-lg text-grafite transition-colors hover:bg-salvia-50/60">
+            Quanto tempo dura a sessão?
+            <i data-lucide="chevron-down" class="faq-seta h-5 w-5 shrink-0 text-salvia-500 transition-transform duration-300"></i>
+          </button>
+        </h3>
+        <div id="faq-corpo-2" class="faq-corpo">
+          <p class="px-6 pb-6 text-sm leading-relaxed text-salvia-800/75">
+            Cada sessão dura cerca de 50 minutos. A frequência mais comum é semanal, mas
+            isso é definido junto com você, considerando a sua demanda e a sua rotina.
+          </p>
+        </div>
+      </div>
+
+      <!-- item 3 -->
+      <div class="faq-item overflow-hidden rounded-2xl border border-salvia-200 bg-white" data-aberto="false">
+        <h3>
+          <button type="button" aria-expanded="false" aria-controls="faq-corpo-3"
+                  class="flex w-full items-center justify-between gap-4 px-6 py-5 text-left font-serif text-lg text-grafite transition-colors hover:bg-salvia-50/60">
+            Como é a primeira sessão?
+            <i data-lucide="chevron-down" class="faq-seta h-5 w-5 shrink-0 text-salvia-500 transition-transform duration-300"></i>
+          </button>
+        </h3>
+        <div id="faq-corpo-3" class="faq-corpo">
+          <p class="px-6 pb-6 text-sm leading-relaxed text-salvia-800/75">
+            É um encontro de acolhimento. Você conta o que está acontecendo, no seu tempo, e
+            eu escuto. Também explico como conduzo o trabalho, esclareço as combinações
+            sobre sigilo, horários e valores, e respondo às suas dúvidas. Não é preciso
+            preparar nada nem chegar com tudo organizado na cabeça.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ BLOG — NEUROPSICOLOGIA ═══════════════════ -->
+<section id="blog" class="bg-areia py-20 sm:py-28">
+  <div class="mx-auto max-w-6xl px-5 sm:px-8">
+
+    <div class="revelar max-w-prosa">
+      <p class="mb-5 flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-terra">
+        Blog
+        <span class="h-px w-12 bg-terra/40"></span>
+      </p>
+      <h2 class="font-serif text-3xl leading-tight text-grafite sm:text-4xl lg:text-5xl">
+        Avaliação, reabilitação e neuroeducação.
+      </h2>
+      <p class="mt-5 text-base leading-relaxed text-salvia-800/75">
+        Três frentes do meu trabalho, explicadas sem jargão. Conteúdo informativo: não
+        substitui consulta nem serve para autodiagnóstico — é material para você chegar
+        mais informada ou informado à conversa.
+      </p>
+    </div>
+
+    <div class="mt-14 grid gap-6 md:grid-cols-3" id="blog-lista">
+
+      <!-- ── artigo 1 · avaliação ── -->
+      <article class="revelar group flex flex-col overflow-hidden rounded-3xl border border-salvia-100 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:border-salvia-200 hover:shadow-xl hover:shadow-salvia-800/10">
+        <div class="relative aspect-[16/10] overflow-hidden bg-salvia-50">
+          <img src="images/blog-avaliacao.webp" width="800" height="499" loading="lazy" decoding="async"
+               alt="Emanuela Bastos à mesa do consultório com o manual do WISC-IV."
+               class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105">
+          <span class="absolute left-4 top-4 rounded-full bg-areia/95 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-salvia-700">
+            Avaliação
+          </span>
+        </div>
+
+        <div class="flex flex-1 flex-col p-7">
+          <h3 class="font-serif text-xl leading-snug text-grafite">
+            O que é uma avaliação neuropsicológica — e o que ela não é
+          </h3>
+          <p class="mt-3 flex-1 text-sm leading-relaxed text-salvia-800/75">
+            Ela não mede inteligência nem entrega um rótulo. O que os testes investigam de
+            fato e o que você recebe no final do processo.
+          </p>
+          <button type="button" data-abrir="artigo-1"
+                  class="mt-6 inline-flex items-center gap-2 self-start text-xs font-semibold uppercase tracking-[0.12em] text-salvia-600 transition-colors hover:text-grafite">
+            Ler artigo
+            <i data-lucide="arrow-right" class="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"></i>
+          </button>
+
+          <!-- texto completo (fica no HTML para busca; exibido no leitor) -->
+          <div id="artigo-1" hidden data-titulo="O que é uma avaliação neuropsicológica — e o que ela não é">
+            <p>
+              Muita gente chega ao consultório achando que a avaliação neuropsicológica é um
+              <strong>teste de inteligência</strong>. Não é. Ela também não é um exame que
+              aponta um diagnóstico sozinha, nem uma prova que se passa ou se reprova.
+            </p>
+            <p>
+              A avaliação é um processo estruturado que descreve <strong>como a pessoa
+              funciona</strong> em diferentes áreas do pensamento e do comportamento: o que
+              ela sustenta com facilidade, onde precisa de mais esforço e quais estratégias
+              já usa para se virar no dia a dia.
+            </p>
+
+            <h3>O que os testes investigam</h3>
+            <p>
+              Cada bateria é montada de acordo com a idade e com a queixa. De modo geral, os
+              instrumentos olham para:
+            </p>
+            <ul>
+              <li><strong>Atenção</strong> — manter o foco, alternar entre tarefas, resistir à distração.</li>
+              <li><strong>Memória</strong> — reter o que acabou de ouvir, aprender listas, lembrar depois.</li>
+              <li><strong>Linguagem</strong> — compreender, nomear, organizar o que quer dizer.</li>
+              <li><strong>Funções executivas</strong> — planejar, começar, organizar e se conter.</li>
+              <li><strong>Raciocínio e habilidades visuoespaciais</strong> — resolver o que é novo, organizar no espaço.</li>
+              <li><strong>Comportamento e emoção</strong> — por meio de escalas respondidas por quem convive com a pessoa.</li>
+            </ul>
+
+            <h3>Como o processo acontece</h3>
+            <p>
+              Começa por uma entrevista longa, que reconstrói a história de desenvolvimento,
+              de saúde e de escola. Depois vêm as sessões de testagem, normalmente de três a
+              seis encontros curtos. Por fim, o material é corrigido, analisado e
+              transformado em um laudo.
+            </p>
+            <p>
+              A devolutiva é a parte que mais importa: é quando os resultados são explicados
+              em linguagem clara, junto com orientações práticas para casa, para a escola e
+              para os profissionais que acompanham o caso.
+            </p>
+
+            <h3>O que ela não faz</h3>
+            <p>
+              A avaliação não substitui a consulta médica e não fecha sozinha diagnósticos
+              que são de competência médica. Ela <strong>contribui</strong> com dados
+              objetivos que ajudam a equipe a decidir — e ajuda a família a entender o que
+              está acontecendo.
+            </p>
+            <p>
+              Também não é um retrato definitivo. Ela descreve um momento. Sono ruim, um
+              período de luto ou uma medicação recente influenciam o desempenho, e isso
+              entra na leitura dos resultados.
+            </p>
+          </div>
+        </div>
+      </article>
+
+      <!-- ── artigo 2 · reabilitação ── -->
+      <article class="revelar group flex flex-col overflow-hidden rounded-3xl border border-salvia-100 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:border-salvia-200 hover:shadow-xl hover:shadow-salvia-800/10">
+        <div class="relative aspect-[16/10] overflow-hidden bg-salvia-50">
+          <img src="images/blog-reabilitacao.webp" width="800" height="499" loading="lazy" decoding="async"
+               alt="Emanuela Bastos segurando o manual das Figuras Complexas de Rey."
+               class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105">
+          <span class="absolute left-4 top-4 rounded-full bg-areia/95 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-salvia-700">
+            Reabilitação
+          </span>
+        </div>
+
+        <div class="flex flex-1 flex-col p-7">
+          <h3 class="font-serif text-xl leading-snug text-grafite">
+            Reabilitação neuropsicológica: o que se faz depois do laudo
+          </h3>
+          <p class="mt-3 flex-1 text-sm leading-relaxed text-salvia-800/75">
+            O laudo não é o fim do caminho. Como se treina atenção, memória e organização —
+            e o que é razoável esperar disso.
+          </p>
+          <button type="button" data-abrir="artigo-2"
+                  class="mt-6 inline-flex items-center gap-2 self-start text-xs font-semibold uppercase tracking-[0.12em] text-salvia-600 transition-colors hover:text-grafite">
+            Ler artigo
+            <i data-lucide="arrow-right" class="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"></i>
+          </button>
+
+          <div id="artigo-2" hidden data-titulo="Reabilitação neuropsicológica: o que se faz depois do laudo">
+            <p>
+              Terminada a avaliação, a pergunta que sempre vem é: <strong>“e agora?”</strong>
+              A reabilitação neuropsicológica é a resposta prática a essa pergunta. Ela pega
+              o perfil descrito no laudo e transforma em um plano de treino.
+            </p>
+            <p>
+              Não é passar tempo em joguinhos de cérebro. É um acompanhamento estruturado,
+              com metas combinadas, tarefas que aumentam de dificuldade aos poucos e — a
+              parte mais importante — <strong>transferência para a vida real</strong>.
+              Melhorar em um exercício de papel só interessa se melhorar também na cozinha,
+              na sala de aula ou no trabalho.
+            </p>
+
+            <h3>Para quem costuma ser indicada</h3>
+            <ul>
+              <li><strong>Depois de um AVC ou traumatismo craniano</strong>, para recuperar e compensar funções afetadas.</li>
+              <li><strong>TDAH</strong>, com foco em organização, planejamento e controle do impulso.</li>
+              <li><strong>Dificuldades de aprendizagem</strong>, apoiando o que a escola sozinha não dá conta.</li>
+              <li><strong>Envelhecimento e queixas de memória</strong>, para manter autonomia no dia a dia.</li>
+              <li><strong>Após quimioterapia ou cirurgias</strong>, quando há queixa cognitiva persistente.</li>
+            </ul>
+
+            <h3>Duas estratégias, sempre juntas</h3>
+            <p>
+              <strong>Restaurar</strong> é treinar diretamente a função enfraquecida, com
+              exercícios repetidos e graduados. <strong>Compensar</strong> é criar apoios
+              externos que contornam a dificuldade: agenda, alarme, lista fixa, roteiro
+              escrito, lugar certo para cada objeto.
+            </p>
+            <p>
+              As duas caminham juntas. Insistir só na primeira frustra; usar só a segunda
+              deixa capacidade na mesa. O equilíbrio entre elas depende do caso, da idade e
+              do tempo desde o evento.
+            </p>
+
+            <h3>O que é razoável esperar</h3>
+            <p>
+              A reabilitação <strong>não promete devolver o cérebro ao estado anterior</strong>.
+              O objetivo é funcional: fazer a pessoa dar conta da própria rotina com mais
+              independência e menos desgaste.
+            </p>
+            <p>
+              Progresso costuma ser lento e desigual — semanas boas, semanas paradas. Por
+              isso reavaliamos periodicamente e ajustamos o plano. E o envolvimento da
+              família e da escola faz muita diferença: o que se treina na sessão precisa ser
+              sustentado fora dela.
+            </p>
+          </div>
+        </div>
+      </article>
+
+      <!-- ── artigo 3 · neuroeducação ── -->
+      <article class="revelar group flex flex-col overflow-hidden rounded-3xl border border-salvia-100 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:border-salvia-200 hover:shadow-xl hover:shadow-salvia-800/10">
+        <div class="relative aspect-[16/10] overflow-hidden bg-salvia-50">
+          <img src="images/blog-neuroeducacao.webp" width="800" height="500" loading="lazy" decoding="async"
+               alt="Emanuela Bastos lendo um manual técnico no consultório."
+               class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105">
+          <span class="absolute left-4 top-4 rounded-full bg-areia/95 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-salvia-700">
+            Neuroeducação
+          </span>
+        </div>
+
+        <div class="flex flex-1 flex-col p-7">
+          <h3 class="font-serif text-xl leading-snug text-grafite">
+            Neuroeducação: o que muda quando se entende como o cérebro aprende
+          </h3>
+          <p class="mt-3 flex-1 text-sm leading-relaxed text-salvia-800/75">
+            Quatro achados sólidos sobre aprendizagem, três mitos que ainda circulam nas
+            escolas — e o que fazer com isso em casa.
+          </p>
+          <button type="button" data-abrir="artigo-3"
+                  class="mt-6 inline-flex items-center gap-2 self-start text-xs font-semibold uppercase tracking-[0.12em] text-salvia-600 transition-colors hover:text-grafite">
+            Ler artigo
+            <i data-lucide="arrow-right" class="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"></i>
+          </button>
+
+          <div id="artigo-3" hidden data-titulo="Neuroeducação: o que muda quando se entende como o cérebro aprende">
+            <p>
+              Neuroeducação é a ponte entre o que a neurociência descobriu sobre
+              aprendizagem e o que acontece de fato na sala de aula e na mesa de estudo de
+              casa. Não é um método nem uma receita — é um conjunto de princípios que ajuda
+              a parar de gastar energia com o que não funciona.
+            </p>
+
+            <h3>Quatro coisas que já sabemos</h3>
+            <ul>
+              <li>
+                <strong>Reler não é estudar.</strong> Passar o olho no texto dá sensação de
+                domínio sem produzir memória. Testar-se — fechar o caderno e tentar lembrar —
+                produz muito mais aprendizagem.
+              </li>
+              <li>
+                <strong>Espaçar vence acumular.</strong> Estudar trinta minutos por quatro
+                dias fixa mais do que duas horas na véspera.
+              </li>
+              <li>
+                <strong>O sono consolida.</strong> É durante o sono que o que foi aprendido
+                se estabiliza. Noite mal dormida antes da prova derruba o que já estava lá.
+              </li>
+              <li>
+                <strong>Errar faz parte do processo.</strong> O erro corrigido logo em
+                seguida ensina mais do que o acerto fácil. Ambiente que pune erro produz
+                criança que evita tentar.
+              </li>
+            </ul>
+
+            <h3>Três mitos que continuam circulando</h3>
+            <ul>
+              <li>
+                <strong>“Cada um tem seu estilo de aprendizagem.”</strong> A ideia de que uns
+                aprendem “vendo” e outros “ouvindo” não se sustenta nos estudos. O que
+                importa é o formato adequado ao conteúdo, não ao aluno.
+              </li>
+              <li>
+                <strong>“Usamos só 10% do cérebro.”</strong> Não existe essa reserva ociosa.
+                Praticamente todo o cérebro tem função conhecida.
+              </li>
+              <li>
+                <strong>“Fulano é do lado direito, é criativo.”</strong> Criatividade e lógica
+                envolvem redes distribuídas nos dois hemisférios.
+              </li>
+            </ul>
+
+            <h3>O que dá para fazer em casa amanhã</h3>
+            <p>
+              Divida o estudo em blocos curtos com pausa de verdade entre eles. Peça à
+              criança que <strong>explique</strong> o conteúdo em voz alta sem olhar o
+              material. Retome no dia seguinte o que foi visto hoje, mesmo que por cinco
+              minutos. E proteja o horário de dormir como se fosse matéria de escola —
+              porque, na prática, é.
+            </p>
+            <p>
+              Quando a dificuldade persiste apesar de tudo isso, vale investigar. Nem todo
+              obstáculo de aprendizagem se resolve com método de estudo, e é exatamente aí
+              que a avaliação neuropsicológica ajuda.
+            </p>
+          </div>
+        </div>
+      </article>
+
+    </div>
+
+    <p class="revelar mt-10 text-center text-sm text-salvia-800/70">
+      Ficou com dúvida sobre algum desses assuntos?
+      <a href="https://wa.me/5574981249127?text=Ol%C3%A1%2C%20Emanuela.%20Li%20um%20texto%20no%20site%20e%20fiquei%20com%20uma%20d%C3%BAvida."
+         target="_blank" rel="noopener"
+         class="font-medium text-salvia-600 underline underline-offset-4 transition-colors hover:text-grafite">
+        Me pergunte pelo WhatsApp.
+      </a>
+    </p>
+  </div>
+</section>
+
+<!-- ═══════════════════ CHAMADA FINAL ═══════════════════ -->
+<section class="relative overflow-hidden bg-salvia-800 py-20 text-center sm:py-24">
+  <div aria-hidden="true"
+       class="pointer-events-none absolute left-1/2 top-0 h-96 w-[42rem] -translate-x-1/2 rounded-full bg-salvia-600/40 blur-3xl"></div>
+  <div class="revelar relative mx-auto max-w-2xl px-5 sm:px-8">
+    <h2 class="font-serif text-3xl leading-tight text-areia sm:text-4xl lg:text-5xl">
+      Dar o primeiro passo já é parte do processo.
+    </h2>
+    <p class="mx-auto mt-5 max-w-lg text-base leading-relaxed text-salvia-100/85">
+      Se você chegou até aqui, talvez seja um bom momento para conversar. Me mande uma
+      mensagem quando se sentir pronta ou pronto.
+    </p>
+    <a href="https://wa.me/5574981249127?text=Ol%C3%A1%2C%20Emanuela.%20Vim%20pelo%20site%20e%20gostaria%20de%20agendar%20uma%20sess%C3%A3o."
+       target="_blank" rel="noopener"
+       class="mt-10 inline-flex items-center gap-2 rounded-full bg-areia px-8 py-4 text-xs font-semibold uppercase tracking-[0.12em] text-salvia-800 shadow-xl transition-all duration-300 hover:-translate-y-0.5 hover:bg-white">
+      <i data-lucide="message-circle" class="h-4 w-4"></i>
+      Agendar pelo WhatsApp
+    </a>
+  </div>
+</section>
+
+</main>
+
+<!-- ═══════════════════ 8. FOOTER ═══════════════════ -->
+<footer class="bg-grafite text-salvia-100/70">
+  <div class="mx-auto max-w-6xl px-5 sm:px-8">
+
+    <div class="grid gap-12 py-16 md:grid-cols-3">
+
+      <!-- identidade -->
+      <div>
+        <div class="flex items-center gap-3">
+          <span class="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-terra/60 font-serif text-sm text-terra">EB</span>
+          <span class="leading-tight">
+            <span class="block font-serif text-lg text-areia">Emanuela Bastos</span>
+            <span class="block text-[11px] font-medium uppercase tracking-[0.18em] text-salvia-300">
+              Neuropsicóloga · CRP 03/11614
+            </span>
+          </span>
+        </div>
+        <p class="mt-5 max-w-xs text-sm leading-relaxed">
+          Atendimento psicológico on-line e presencial, com escuta cuidadosa e sigilo
+          garantido pelo Código de Ética Profissional do Psicólogo.
+        </p>
+
+        <!-- redes sociais -->
+        <div class="mt-6 flex gap-3">
+          <a href="https://www.instagram.com/emanuelabastos.psi" target="_blank" rel="noopener"
+             class="grid h-10 w-10 place-items-center rounded-full border border-salvia-100/20 transition-colors hover:border-terra hover:text-terra"
+             aria-label="Instagram de Emanuela Bastos">
+            <!-- ícone do Instagram (marca — não existe no Lucide) -->
+            <svg viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4" aria-hidden="true">
+              <path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.8 3.8 0 0 1-1.38-.9 3.8 3.8 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41 1.27-.06 1.65-.07 4.85-.07Zm0 6.51a3.33 3.33 0 1 0 0 6.66 3.33 3.33 0 0 0 0-6.66Zm0 5.5a2.17 2.17 0 1 1 0-4.34 2.17 2.17 0 0 1 0 4.34Zm4.24-5.62a.78.78 0 1 1-1.56 0 .78.78 0 0 1 1.56 0Z"/>
+            </svg>
+          </a>
+          <a href="https://wa.me/5574981249127" target="_blank" rel="noopener"
+             class="grid h-10 w-10 place-items-center rounded-full border border-salvia-100/20 transition-colors hover:border-terra hover:text-terra"
+             aria-label="WhatsApp de Emanuela Bastos">
+            <i data-lucide="message-circle" class="h-4 w-4"></i>
+          </a>
+          <a href="mailto:Emanuela.basttos@gmail.com"
+             class="grid h-10 w-10 place-items-center rounded-full border border-salvia-100/20 transition-colors hover:border-terra hover:text-terra"
+             aria-label="E-mail de Emanuela Bastos">
+            <i data-lucide="mail" class="h-4 w-4"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- navegação -->
+      <nav aria-label="Rodapé">
+        <h2 class="mb-5 text-[11px] font-semibold uppercase tracking-[0.22em] text-salvia-300">Navegação</h2>
+        <ul class="space-y-3 text-sm">
+          <li><a href="#areas"       class="transition-colors hover:text-areia">Áreas de atuação</a></li>
+          <li><a href="#sobre"       class="transition-colors hover:text-areia">Sobre mim</a></li>
+          <li><a href="#agendamento" class="transition-colors hover:text-areia">Como funciona</a></li>
+          <li><a href="#blog"        class="transition-colors hover:text-areia">Blog</a></li>
+          <li><a href="#faq"         class="transition-colors hover:text-areia">Dúvidas frequentes</a></li>
+        </ul>
+      </nav>
+
+      <!-- contato -->
+      <div>
+        <h2 class="mb-5 text-[11px] font-semibold uppercase tracking-[0.22em] text-salvia-300">Contato</h2>
+        <ul class="space-y-4 text-sm">
+          <li class="flex items-start gap-3">
+            <i data-lucide="phone" class="mt-0.5 h-4 w-4 shrink-0 text-terra"></i>
+            <a href="https://wa.me/5574981249127" target="_blank" rel="noopener" class="transition-colors hover:text-areia">
+              (74) 98124-9127
+            </a>
+          </li>
+          <li class="flex items-start gap-3">
+            <i data-lucide="mail" class="mt-0.5 h-4 w-4 shrink-0 text-terra"></i>
+            <a href="mailto:Emanuela.basttos@gmail.com" class="break-all transition-colors hover:text-areia">
+              Emanuela.basttos@gmail.com
+            </a>
+          </li>
+          <li class="flex items-start gap-3">
+            <i data-lucide="map-pin" class="mt-0.5 h-4 w-4 shrink-0 text-terra"></i>
+            <span>Irecê e região — Bahia<br>Endereço do consultório enviado na confirmação</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <i data-lucide="clock" class="mt-0.5 h-4 w-4 shrink-0 text-terra"></i>
+            <span>Atendimento com hora marcada,<br>presencial e on-line</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- aviso de emergência -->
+    <div class="rounded-2xl border border-terra/30 bg-terra/10 p-5 text-sm leading-relaxed">
+      <p class="flex items-start gap-3">
+        <i data-lucide="life-buoy" class="mt-0.5 h-5 w-5 shrink-0 text-terra"></i>
+        <span>
+          <strong class="font-medium text-areia">Este site não atende emergências.</strong>
+          Se você estiver em sofrimento intenso ou pensando em morte, ligue para o
+          <a href="tel:188" class="font-medium text-terra underline underline-offset-4 hover:text-areia">CVV 188</a>
+          (gratuito, 24 horas) ou procure a emergência mais próxima. Em risco imediato,
+          ligue <a href="tel:192" class="font-medium text-terra underline underline-offset-4 hover:text-areia">192</a>.
+        </span>
+      </p>
+    </div>
+
+    <!-- linha final -->
+    <div class="flex flex-col gap-2 border-t border-salvia-100/10 py-8 text-xs sm:flex-row sm:items-center sm:justify-between">
+      <p>© 2026 Emanuela Bastos · CRP 03/11614. Todos os direitos reservados.</p>
+      <p>Conteúdo informativo. Não substitui avaliação profissional individual.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══════════════════ LEITOR DE ARTIGOS (blog) ═══════════════════ -->
+<div id="leitor" class="fixed inset-0 z-[80] hidden items-start justify-center overflow-y-auto p-4 sm:p-8">
+  <div data-fechar class="fixed inset-0 bg-grafite/60 backdrop-blur-sm"></div>
+
+  <div role="dialog" aria-modal="true" aria-labelledby="leitor-titulo"
+       class="relative my-auto w-full max-w-2xl rounded-3xl bg-areia p-7 shadow-2xl sm:p-10">
+
+    <button type="button" data-fechar
+            class="absolute right-5 top-5 grid h-10 w-10 place-items-center rounded-full border border-salvia-200 bg-white text-grafite transition-colors hover:bg-salvia-50">
+      <i data-lucide="x" class="h-5 w-5"></i>
+      <span class="sr-only">Fechar artigo</span>
+    </button>
+
+    <p class="mb-4 text-[11px] font-semibold uppercase tracking-[0.22em] text-terra">
+      Blog de neuropsicologia
+    </p>
+    <h2 id="leitor-titulo" class="pr-10 font-serif text-2xl leading-tight text-grafite sm:text-3xl"></h2>
+
+    <div id="leitor-corpo" class="artigo mt-7 text-[15px] leading-relaxed text-salvia-800/85"></div>
+
+    <div class="mt-9 border-t border-salvia-200 pt-7">
+      <p class="mb-5 text-xs leading-relaxed text-salvia-800/60">
+        Texto informativo, escrito por Emanuela Bastos (CRP 03/11614). Não substitui
+        avaliação individual nem serve para autodiagnóstico.
+      </p>
+      <a href="https://wa.me/5574981249127?text=Ol%C3%A1%2C%20Emanuela.%20Li%20um%20texto%20no%20site%20e%20gostaria%20de%20conversar."
+         target="_blank" rel="noopener"
+         class="inline-flex items-center gap-2 rounded-full bg-salvia-500 px-6 py-3.5 text-xs font-semibold uppercase tracking-[0.12em] text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-salvia-600">
+        <i data-lucide="message-circle" class="h-4 w-4"></i>
+        Conversar sobre isso
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ 9. BOTÃO FLUTUANTE DE WHATSAPP ═══════════════════ -->
+<a href="https://wa.me/5574981249127?text=Ol%C3%A1%2C%20Emanuela.%20Vim%20pelo%20site%20e%20gostaria%20de%20agendar%20uma%20sess%C3%A3o."
+   target="_blank" rel="noopener"
+   class="group fixed bottom-5 right-5 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition-transform duration-300 hover:scale-105 animate-pulsoSuave sm:bottom-7 sm:right-7">
+  <span class="sr-only">Falar com Emanuela no WhatsApp</span>
+  <!-- ícone oficial do WhatsApp -->
+  <svg viewBox="0 0 24 24" fill="currentColor" class="h-7 w-7" aria-hidden="true">
+    <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 18.15h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.19 8.19 0 0 1-1.26-4.38c0-4.54 3.7-8.23 8.25-8.23 2.2 0 4.27.86 5.83 2.42a8.18 8.18 0 0 1 2.41 5.82c0 4.54-3.7 8.23-8.24 8.23Zm4.52-6.16c-.25-.13-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.24-.64.8-.79.97-.14.16-.29.18-.54.06-.25-.13-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.5.11-.11.25-.29.37-.43.13-.15.17-.25.25-.41.08-.17.04-.31-.02-.44-.06-.12-.56-1.35-.77-1.84-.2-.48-.4-.42-.55-.43h-.47c-.16 0-.43.06-.65.31-.22.25-.85.83-.85 2.03s.87 2.35.99 2.51c.12.16 1.71 2.61 4.14 3.66.58.25 1.03.4 1.38.51.58.19 1.11.16 1.53.1.47-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.14-1.18-.06-.11-.22-.17-.47-.29Z"/>
+  </svg>
+</a>
+
+<!-- ═══════════════════ SCRIPTS ═══════════════════ -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+  /* ---------- ícones Lucide ---------- */
+  function desenharIcones() {
+    if (window.lucide) window.lucide.createIcons();
+  }
+  desenharIcones();
+  window.addEventListener('load', desenharIcones);
+
+  /* ---------- cabeçalho ganha fundo ao rolar ---------- */
+  var cabecalho = document.getElementById('cabecalho');
+  function aoRolar() {
+    var rolou = window.scrollY > 24;
+    cabecalho.classList.toggle('bg-areia/90', rolou);
+    cabecalho.classList.toggle('backdrop-blur-md', rolou);
+    cabecalho.classList.toggle('border-salvia-100', rolou);
+    cabecalho.classList.toggle('shadow-sm', rolou);
+  }
+  aoRolar();
+  window.addEventListener('scroll', aoRolar, { passive: true });
+
+  /* ---------- menu do celular ---------- */
+  var btnMenu    = document.getElementById('btn-menu');
+  var menuMobile = document.getElementById('menu-mobile');
+  var iconeMenu  = document.getElementById('icone-menu');
+
+  function alternarMenu(abrir) {
+    btnMenu.setAttribute('aria-expanded', abrir ? 'true' : 'false');
+    menuMobile.classList.toggle('hidden', !abrir);
+    iconeMenu.setAttribute('data-lucide', abrir ? 'x' : 'menu');
+    desenharIcones();
+  }
+  btnMenu.addEventListener('click', function () {
+    alternarMenu(btnMenu.getAttribute('aria-expanded') !== 'true');
+  });
+  menuMobile.addEventListener('click', function (e) {
+    if (e.target.closest('a')) alternarMenu(false);
+  });
+
+  /* ---------- acordeão do FAQ ---------- */
+  document.querySelectorAll('.faq-item').forEach(function (item) {
+    var botao = item.querySelector('button');
+    botao.addEventListener('click', function () {
+      var estavaAberto = item.dataset.aberto === 'true';
+
+      /* fecha os demais para manter a leitura focada */
+      document.querySelectorAll('.faq-item').forEach(function (outro) {
+        outro.dataset.aberto = 'false';
+        outro.querySelector('button').setAttribute('aria-expanded', 'false');
+      });
+
+      item.dataset.aberto = estavaAberto ? 'false' : 'true';
+      botao.setAttribute('aria-expanded', estavaAberto ? 'false' : 'true');
+    });
+  });
+
+  /* ---------- leitor de artigos do blog ---------- */
+  var leitor       = document.getElementById('leitor');
+  var leitorTitulo = document.getElementById('leitor-titulo');
+  var leitorCorpo  = document.getElementById('leitor-corpo');
+  var focoAnterior = null;
+
+  function abrirArtigo(id) {
+    var fonte = document.getElementById(id);
+    if (!fonte) return;
+
+    focoAnterior = document.activeElement;
+    leitorTitulo.textContent = fonte.getAttribute('data-titulo') || '';
+    leitorCorpo.innerHTML = fonte.innerHTML;
+
+    leitor.classList.remove('hidden');
+    leitor.classList.add('flex');
+    document.body.classList.add('leitor-aberto');
+    desenharIcones();
+
+    var fechar = leitor.querySelector('button[data-fechar]');
+    if (fechar) fechar.focus();
+  }
+
+  function fecharArtigo() {
+    leitor.classList.add('hidden');
+    leitor.classList.remove('flex');
+    document.body.classList.remove('leitor-aberto');
+    leitorCorpo.innerHTML = '';
+    if (focoAnterior) focoAnterior.focus();
+  }
+
+  document.addEventListener('click', function (e) {
+    var gatilho = e.target.closest('[data-abrir]');
+    if (gatilho) { abrirArtigo(gatilho.getAttribute('data-abrir')); return; }
+    if (e.target.closest('[data-fechar]')) fecharArtigo();
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && !leitor.classList.contains('hidden')) fecharArtigo();
+  });
+
+  /* ═══════════════════════════════════════════════════════════
+     POSTAGENS DO BLOG (content/posts.json)
+
+     Os três artigos já estão escritos no HTML acima. Este bloco
+     só entra em ação se o arquivo do painel carregar — aí ele
+     substitui os cards pelas postagens salvas. Se o arquivo não
+     existir ou falhar, a página segue completa do jeito que está.
+     ═══════════════════════════════════════════════════════════ */
+
+  var blogLista = document.getElementById('blog-lista');
+
+  function esc(t) {
+    return String(t == null ? '' : t)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  function paraHtml(markdown) {
+    if (window.marked && typeof window.marked.parse === 'function') {
+      return window.marked.parse(String(markdown || ''));
+    }
+    /* sem o conversor, mostra os paragrafos como texto simples */
+    return String(markdown || '').split(/\n{2,}/)
+      .map(function (par) { return '<p>' + esc(par) + '</p>'; }).join('');
+  }
+
+  function montarCard(post, indice) {
+    var id  = 'post-' + (indice + 1);
+    var img = post.imagem || 'images/blog-avaliacao.webp';
+
+    return '' +
+      '<article class="revelar group flex flex-col overflow-hidden rounded-3xl border border-salvia-100 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:border-salvia-200 hover:shadow-xl hover:shadow-salvia-800/10">' +
+        '<div class="relative aspect-[16/10] overflow-hidden bg-salvia-50">' +
+          '<img src="' + esc(img) + '" loading="lazy" decoding="async" alt="' + esc(post.imagem_alt || post.titulo) + '"' +
+               ' class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105">' +
+          '<span class="absolute left-4 top-4 rounded-full bg-areia/95 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-salvia-700">' +
+            esc(post.categoria || 'Neuropsicologia') +
+          '</span>' +
+        '</div>' +
+        '<div class="flex flex-1 flex-col p-7">' +
+          '<h3 class="font-serif text-xl leading-snug text-grafite">' + esc(post.titulo) + '</h3>' +
+          '<p class="mt-3 flex-1 text-sm leading-relaxed text-salvia-800/75">' + esc(post.resumo) + '</p>' +
+          '<button type="button" data-abrir="' + id + '"' +
+                 ' class="mt-6 inline-flex items-center gap-2 self-start text-xs font-semibold uppercase tracking-[0.12em] text-salvia-600 transition-colors hover:text-grafite">' +
+            'Ler artigo' +
+            '<i data-lucide="arrow-right" class="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"></i>' +
+          '</button>' +
+          '<div id="' + id + '" hidden data-titulo="' + esc(post.titulo) + '">' + paraHtml(post.corpo) + '</div>' +
+        '</div>' +
+      '</article>';
+  }
+
+  var blogPronto = fetch('content/posts.json', { cache: 'no-cache' })
+    .then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
+    .then(function (dados) {
+      var posts = dados && dados.posts;
+      if (!blogLista || !Array.isArray(posts) || !posts.length) return;
+      blogLista.innerHTML = posts.map(montarCard).join('');
+      desenharIcones();
+    })
+    .catch(function () { /* silencioso: os artigos do HTML continuam valendo */ });
+
+  /* ---------- convite e recuperacao de senha do painel ----------
+     O widget de login so e baixado quando a Emanuela chega por um
+     link de convite. Visitante comum nunca carrega esse script. */
+  if (/(invite_token|recovery_token|confirmation_token|email_change_token)=/.test(window.location.hash)) {
+    var sIdent = document.createElement('script');
+    sIdent.src = 'https://identity.netlify.com/v1/netlify-identity-widget.js';
+    sIdent.onload = function () {
+      window.netlifyIdentity.on('init', function (usuario) {
+        if (!usuario) {
+          window.netlifyIdentity.on('login', function () { document.location.href = 'admin/'; });
+        }
+      });
+    };
+    document.head.appendChild(sIdent);
+  }
+
+  /* ---------- revelação suave ao rolar ---------- */
+  function ligarRevelacao() {
+  var alvos = document.querySelectorAll('.revelar');
+  var menosMovimento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (menosMovimento || !('IntersectionObserver' in window)) {
+    alvos.forEach(function (el) { el.classList.add('visivel'); });
+  } else {
+    var observador = new IntersectionObserver(function (entradas) {
+      entradas.forEach(function (entrada) {
+        if (!entrada.isIntersecting) return;
+        entrada.target.classList.add('visivel');
+        observador.unobserve(entrada.target);
+      });
+    }, { rootMargin: '0px 0px -10% 0px', threshold: 0.08 });
+
+    alvos.forEach(function (el, i) {
+      el.style.transitionDelay = (Math.min(i % 3, 2) * 90) + 'ms';
+      observador.observe(el);
+    });
+
+    /* rede de segurança: nada pode ficar invisível se o observador falhar */
+    setTimeout(function () {
+      alvos.forEach(function (el) { el.classList.add('visivel'); });
+    }, 2500);
+  }
+  }
+
+  /* so depois que as postagens do painel entraram na pagina */
+  blogPronto.then(ligarRevelacao, ligarRevelacao);
+});
+</script>
+</body>
+</html>

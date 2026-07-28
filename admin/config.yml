@@ -1,0 +1,66 @@
+# Painel de postagens — Decap CMS
+# As alterações feitas aqui viram commits no repositório do site.
+
+backend:
+  name: git-gateway
+  branch: main
+  commit_messages:
+    update: 'Blog: atualiza {{collection}}'
+
+# onde as imagens enviadas pelo painel são gravadas
+media_folder: "images"
+public_folder: "images"
+
+locale: "pt"
+publish_mode: simple
+show_preview_links: false
+
+collections:
+  - name: "blog"
+    label: "Blog"
+    files:
+      - name: "posts"
+        label: "Postagens"
+        file: "content/posts.json"
+        format: "json"
+        description: "Cada item vira um card na seção Blog do site. A ordem aqui é a ordem que aparece na página."
+        fields:
+          - label: "Postagens"
+            name: "posts"
+            widget: "list"
+            label_singular: "Postagem"
+            summary: "{{fields.categoria}} · {{fields.titulo}}"
+            fields:
+              - label: "Título"
+                name: "titulo"
+                widget: "string"
+                hint: "Aparece no card e no topo do artigo."
+
+              - label: "Categoria"
+                name: "categoria"
+                widget: "select"
+                options: ["Avaliação", "Reabilitação", "Neuroeducação"]
+                default: "Avaliação"
+                hint: "Selo colorido sobre a foto do card."
+
+              - label: "Resumo"
+                name: "resumo"
+                widget: "text"
+                hint: "Duas ou três linhas. É o que aparece no card, antes de 'Ler artigo'."
+
+              - label: "Imagem de capa"
+                name: "imagem"
+                widget: "image"
+                default: "images/blog-avaliacao.webp"
+                hint: "Formato deitado (16:10). O ideal é 800 x 500 pixels."
+
+              - label: "Descrição da imagem"
+                name: "imagem_alt"
+                widget: "string"
+                required: false
+                hint: "Descreve a foto para quem usa leitor de tela. Ex.: 'Emanuela no consultório com um manual de teste'."
+
+              - label: "Texto do artigo"
+                name: "corpo"
+                widget: "markdown"
+                hint: "Use ## para subtítulos e - para listas. O negrito é feito com **duas estrelas**."

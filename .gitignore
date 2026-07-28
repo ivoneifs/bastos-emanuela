@@ -1,0 +1,7 @@
+# Arquivos de trabalho que não vão para o site publicado
+_originais/
+
+# Sistema
+Thumbs.db
+.DS_Store
+desktop.ini

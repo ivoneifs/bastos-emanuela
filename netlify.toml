@@ -1,0 +1,22 @@
+[build]
+  publish = "."
+
+# O painel não é indexado por buscadores nem entra em cache.
+[[headers]]
+  for = "/admin/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow, noarchive"
+    Cache-Control = "no-store"
+
+# O conteúdo do blog é lido pela página, então não pode ficar preso em cache.
+[[headers]]
+  for = "/content/*"
+  [headers.values]
+    X-Robots-Tag = "noindex"
+    Cache-Control = "no-cache"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
