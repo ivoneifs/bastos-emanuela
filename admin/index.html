@@ -9,24 +9,90 @@
 <link rel="icon" href="../images/favicon.webp">
 
 <style>
-  /* tela de espera enquanto o painel carrega */
-  html, body { margin: 0; height: 100%; background: #F7F5F0;
+  html, body { margin: 0; min-height: 100%; background: #F7F5F0;
                font-family: Inter, system-ui, -apple-system, 'Segoe UI', sans-serif; color: #2B352A; }
-  #carregando { position: fixed; inset: 0; display: grid; place-items: center; text-align: center; padding: 24px; }
-  #carregando .marca { width: 56px; height: 56px; margin: 0 auto 18px; border-radius: 50%;
-                       border: 1px solid #B08968; color: #B08968; display: grid; place-items: center;
-                       font-family: Georgia, serif; letter-spacing: .04em; }
-  #carregando h1 { font-family: Georgia, serif; font-weight: 400; font-size: 1.5rem; margin: 0 0 8px; }
-  #carregando p  { margin: 0; font-size: .9rem; color: #5A7055; max-width: 34ch; line-height: 1.6; }
+
+  /* telas de espera e de diagnóstico, sobrepostas ao painel */
+  .tela { position: fixed; inset: 0; z-index: 9999; display: grid; place-items: center;
+          background: #F7F5F0; padding: 24px; overflow-y: auto; }
+  .caixa { max-width: 34rem; width: 100%; }
+  .marca { width: 56px; height: 56px; margin: 0 auto 20px; border-radius: 50%;
+           border: 1px solid #B08968; color: #B08968; display: grid; place-items: center;
+           font-family: Georgia, serif; font-size: .95rem; letter-spacing: .04em; }
+  h1 { font-family: Georgia, serif; font-weight: 400; font-size: 1.6rem; margin: 0 0 10px; text-align: center; }
+  .sub { margin: 0 0 28px; font-size: .92rem; color: #5A7055; line-height: 1.6; text-align: center; }
+
+  .aviso { border: 1px solid #E3EAE0; background: #fff; border-radius: 18px; padding: 26px 24px; }
+  .aviso h2 { font-family: Georgia, serif; font-weight: 400; font-size: 1.1rem; margin: 0 0 14px; }
+  ol { margin: 0; padding-left: 1.3em; font-size: .9rem; line-height: 1.7; color: #364534; }
+  ol li { margin-bottom: 10px; }
+  ol li:last-child { margin-bottom: 0; }
+  code { background: #F1F4EF; border-radius: 5px; padding: 2px 6px;
+         font-family: ui-monospace, Menlo, Consolas, monospace; font-size: .85em; }
+  a { color: #5A7055; }
+  .estado { margin-top: 22px; padding-top: 18px; border-top: 1px solid #E3EAE0;
+            font-size: .82rem; color: #6F8869; line-height: 1.8; }
+  .estado b { color: #2B352A; font-weight: 600; }
+  .voltar { display: inline-block; margin-top: 24px; font-size: .82rem; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .pulsa { animation: pulsa 1.6s ease-in-out infinite; }
+    @keyframes pulsa { 0%,100% { opacity: .45 } 50% { opacity: 1 } }
+  }
 </style>
 </head>
 <body>
 
-<div id="carregando">
-  <div>
-    <div class="marca">EB</div>
+<!-- enquanto o painel carrega -->
+<div class="tela" id="espera">
+  <div class="caixa" style="text-align:center">
+    <div class="marca pulsa">EB</div>
     <h1>Painel do blog</h1>
-    <p>Carregando o editor. Se esta tela não sair do lugar, verifique se o Netlify Identity está ativado no site.</p>
+    <p class="sub">Carregando o editor…</p>
+  </div>
+</div>
+
+<!-- se o painel não conseguir subir -->
+<div class="tela" id="ajuda" hidden>
+  <div class="caixa">
+    <div class="marca">EB</div>
+    <h1>Painel ainda não configurado</h1>
+    <p class="sub">
+      O editor está instalado e funcionando. O que falta é ligar o serviço de login
+      no Netlify — e isso só pode ser feito por quem administra a conta.
+    </p>
+
+    <div class="aviso">
+      <h2>Os quatro passos que faltam</h2>
+      <ol>
+        <li>
+          Enviar o código para o repositório
+          <code>emanuelabasttos-spec/bastos</code> no GitHub.
+        </li>
+        <li>
+          No Netlify, em <b>Site configuration → Build &amp; deploy → Link repository</b>,
+          escolher esse repositório.
+        </li>
+        <li>
+          Em <b>Identity</b>, clicar em <b>Enable Identity</b> e deixar
+          <b>Registration</b> como <b>Invite only</b> — é isso que garante que só a
+          Emanuela consegue entrar.
+        </li>
+        <li>
+          Em <b>Identity → Services</b>, clicar em <b>Enable Git Gateway</b>. Depois,
+          em <b>Invite users</b>, convidar o e-mail da Emanuela.
+        </li>
+      </ol>
+
+      <div class="estado">
+        Diagnóstico deste momento:<br>
+        <span id="diag-identity">Verificando o serviço de login…</span>
+      </div>
+    </div>
+
+    <p style="text-align:center">
+      <a class="voltar" href="../">← Voltar para o site</a>
+    </p>
   </div>
 </div>
 
@@ -36,13 +102,34 @@
 <script src="https://unpkg.com/decap-cms@^3.1.10/dist/decap-cms.js"></script>
 
 <script>
-  // some com a tela de espera assim que o painel aparecer
-  window.addEventListener('load', function () {
-    setTimeout(function () {
-      var espera = document.getElementById('carregando');
-      if (espera) espera.style.display = 'none';
-    }, 1200);
-  });
+(function () {
+  var espera = document.getElementById('espera');
+  var ajuda  = document.getElementById('ajuda');
+  var diag   = document.getElementById('diag-identity');
+
+  /* O Identity só responde neste endereço quando está ativado no Netlify.
+     É o teste mais direto de que o painel vai conseguir ou não fazer login. */
+  fetch('/.netlify/identity/settings', { cache: 'no-store' })
+    .then(function (r) {
+      if (r.ok) {
+        /* tudo certo: sai da frente e deixa o Decap trabalhar */
+        diag.innerHTML = '<b>Serviço de login: ativo.</b>';
+        setTimeout(function () { espera.hidden = true; espera.style.display = 'none'; }, 800);
+        return;
+      }
+      mostrarAjuda('<b>Serviço de login: não ativado</b> (o endereço /.netlify/identity respondeu ' + r.status + ').');
+    })
+    .catch(function () {
+      mostrarAjuda('<b>Serviço de login: não foi possível verificar.</b> Confira a conexão.');
+    });
+
+  function mostrarAjuda(texto) {
+    diag.innerHTML = texto;
+    espera.hidden = true;
+    espera.style.display = 'none';
+    ajuda.hidden = false;
+  }
+})();
 </script>
 </body>
 </html>
