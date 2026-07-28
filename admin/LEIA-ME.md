@@ -10,7 +10,8 @@ Netlify republica o site sozinho.
 
 ## Passo a passo (feito uma vez só, por você)
 
-1. **Publique o site no Netlify** conectado ao repositório do GitHub.
+1. **Ligue o site ao repositório** `ivoneifs/bastos-emanuela` em
+   Site configuration → Build & deploy → Link repository.
 
 2. No painel do Netlify, abra **Site configuration → Identity** e clique em
    **Enable Identity**.
