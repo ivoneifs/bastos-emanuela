@@ -243,3 +243,12 @@ create policy "logada remove imagem do site"
 --  Pronto. Confira em Table Editor: conteudo (≈50 linhas),
 --  areas (6 linhas) e faq (3 linhas).
 -- ═══════════════════════════════════════════════════════════════
+
+
+-- ═══════════ 8. sala do Google Meet e atalho no painel ═══════════
+--  Rode este trecho se já tiver rodado o arquivo antes.
+
+insert into public.conteudo (chave, valor, tipo, grupo, rotulo, dica, ordem) values
+('contato.meet', '', 'link', 'Topo', 'Sala do Google Meet',
+ 'Cole aqui o link fixo da sua sala (ex.: https://meet.google.com/abc-defg-hij). Enquanto estiver vazio, o botão não aparece no site.', 6)
+on conflict (chave) do nothing;
