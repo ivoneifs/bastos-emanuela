@@ -101,6 +101,24 @@ code{background:var(--salvia-50);border-radius:5px;padding:2px 6px;
      font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.85em;word-break:break-all}
 ol.passos{margin:0;padding-left:1.25em;font-size:.88rem;line-height:1.75}
 ol.passos li{margin-bottom:9px}
+
+/* ── abas ── */
+.abas{display:flex;gap:4px;margin-bottom:26px;border-bottom:1px solid var(--salvia-clara);overflow-x:auto}
+.aba{background:none;border:0;border-bottom:2px solid transparent;padding:11px 16px;cursor:pointer;
+     font-size:.85rem;font-weight:500;color:#7A8A78;white-space:nowrap;transition:color .2s,border-color .2s}
+.aba:hover{color:var(--grafite)}
+.aba.ativa{color:var(--grafite);border-bottom-color:var(--salvia);font-weight:600}
+
+/* ── fichas de conteúdo ── */
+.grupo{margin-bottom:30px}
+.grupo > h3{font-size:1.1rem;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--salvia-clara)}
+.ficha{background:var(--branco);border:1px solid var(--salvia-clara);border-radius:14px;padding:16px 18px;margin-bottom:10px}
+.ficha .topo-ficha{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.ficha label{margin:0;flex:1}
+.salvo{font-size:.68rem;color:var(--salvia);opacity:0;transition:opacity .25s}
+.salvo.ver{opacity:1}
+.mini{display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap}
+.mini img{width:120px;border-radius:9px;border:1px solid var(--salvia-clara)}
 </style>
 </head>
 <body>
@@ -166,6 +184,14 @@ ol.passos li{margin-bottom:9px}
 
   <div class="area">
     <div id="recado" class="recado oculto"></div>
+
+    <!-- abas -->
+    <nav class="abas" id="abas">
+      <button class="aba ativa" data-aba="posts"    type="button">Postagens</button>
+      <button class="aba"       data-aba="conteudo" type="button">Textos e imagens</button>
+      <button class="aba"       data-aba="areas"    type="button">Áreas de atuação</button>
+      <button class="aba"       data-aba="faq"      type="button">Dúvidas</button>
+    </nav>
 
     <!-- lista -->
     <section id="secao-lista">
@@ -246,6 +272,33 @@ ol.passos li{margin-bottom:9px}
         </div>
       </form>
     </section>
+
+    <!-- ═════ textos e imagens ═════ -->
+    <section id="secao-conteudo" class="oculto">
+      <h2 style="font-size:1.5rem;margin-bottom:6px">Textos e imagens do site</h2>
+      <p class="dica" style="margin-bottom:24px">
+        Cada campo salva sozinho quando você sai dele. A mudança aparece no site na hora.
+      </p>
+      <div id="campos-conteudo"></div>
+    </section>
+
+    <!-- ═════ áreas de atuação ═════ -->
+    <section id="secao-areas" class="oculto">
+      <div style="display:flex;align-items:center;gap:14px;margin-bottom:22px">
+        <h2 style="font-size:1.5rem;margin-right:auto">Áreas de atuação</h2>
+        <button class="btn btn-p" id="btn-nova-area" type="button">+ Nova área</button>
+      </div>
+      <div id="lista-areas"></div>
+    </section>
+
+    <!-- ═════ dúvidas ═════ -->
+    <section id="secao-faq" class="oculto">
+      <div style="display:flex;align-items:center;gap:14px;margin-bottom:22px">
+        <h2 style="font-size:1.5rem;margin-right:auto">Dúvidas frequentes</h2>
+        <button class="btn btn-p" id="btn-nova-duvida" type="button">+ Nova dúvida</button>
+      </div>
+      <div id="lista-faq"></div>
+    </section>
   </div>
 </div>
 
@@ -315,6 +368,222 @@ if (!CONFIG.url || !CONFIG.anon) {
 
   const { data: { session } } = await sb.auth.getSession();
   if (!session) mostrar('tela-login');
+
+  /* ═══════════ abas ═══════════ */
+  const SECOES = { posts:'secao-lista', conteudo:'secao-conteudo', areas:'secao-areas', faq:'secao-faq' };
+  let abaAtual = 'posts';
+
+  $('abas').addEventListener('click', (e) => {
+    const b = e.target.closest('.aba'); if (!b) return;
+    abaAtual = b.dataset.aba;
+    document.querySelectorAll('.aba').forEach(x => x.classList.toggle('ativa', x === b));
+    esconder('secao-editor');
+    Object.entries(SECOES).forEach(([k, id]) => $(id).classList.toggle('oculto', k !== abaAtual));
+    if (abaAtual === 'conteudo') carregarConteudo();
+    if (abaAtual === 'areas')    carregarAreas();
+    if (abaAtual === 'faq')      carregarFaq();
+    window.scrollTo(0, 0);
+  });
+
+  function faltaTabela(error, nome) {
+    return (error.code === 'PGRST205' || /schema cache/.test(error.message || ''))
+      ? 'A tabela "' + nome + '" ainda não existe. Rode o supabase/schema-2-conteudo.sql no SQL Editor.'
+      : 'Erro: ' + error.message;
+  }
+
+  /* ═══════════ textos e imagens ═══════════ */
+  async function carregarConteudo() {
+    const caixa = $('campos-conteudo');
+    caixa.innerHTML = '<div class="vazio">Carregando…</div>';
+    const { data, error } = await sb.from('conteudo').select('*').order('grupo').order('ordem');
+    if (error) { caixa.innerHTML = '<div class="vazio">—</div>'; return avisar(faltaTabela(error, 'conteudo'), true); }
+    if (!data.length) { caixa.innerHTML = '<div class="vazio">Nada cadastrado ainda.</div>'; return; }
+
+    const grupos = {};
+    data.forEach(c => { (grupos[c.grupo] = grupos[c.grupo] || []).push(c); });
+
+    caixa.innerHTML = Object.entries(grupos).map(([nome, itens]) =>
+      '<div class="grupo"><h3>' + escapar(nome) + '</h3>' + itens.map(fichaDe).join('') + '</div>'
+    ).join('');
+
+    caixa.querySelectorAll('[data-chave]').forEach(campo => {
+      campo.addEventListener('change', () => salvarCampo(campo));
+    });
+    caixa.querySelectorAll('[data-troca-img]').forEach(b => {
+      b.addEventListener('click', () => trocarImagem(b.dataset.trocaImg));
+    });
+  }
+
+  function fichaDe(c) {
+    const id  = 'campo-' + c.chave.replace(/\./g, '-');
+    const val = escapar(c.valor);
+    let entrada;
+
+    if (c.tipo === 'imagem') {
+      const src = c.valor.startsWith('http') ? c.valor : '../' + c.valor;
+      entrada = '<div class="mini">'
+        + '<img src="' + escapar(src) + '" alt="" onerror="this.style.display=\'none\'">'
+        + '<div style="flex:1;min-width:180px">'
+        +   '<input type="text" id="' + id + '" data-chave="' + c.chave + '" value="' + val + '">'
+        +   '<button class="btn btn-s btn-min" style="margin-top:8px" data-troca-img="' + c.chave + '" type="button">Enviar outra imagem</button>'
+        + '</div></div>';
+    } else if (c.tipo === 'textao') {
+      entrada = '<textarea id="' + id + '" data-chave="' + c.chave + '" style="min-height:90px">' + val + '</textarea>';
+    } else {
+      entrada = '<input type="text" id="' + id + '" data-chave="' + c.chave + '" value="' + val + '">';
+    }
+
+    return '<div class="ficha">'
+      + '<div class="topo-ficha"><label for="' + id + '">' + escapar(c.rotulo) + '</label>'
+      +   '<span class="salvo" id="ok-' + c.chave.replace(/\./g, '-') + '">salvo</span></div>'
+      + entrada
+      + (c.dica ? '<p class="dica">' + escapar(c.dica) + '</p>' : '')
+      + '</div>';
+  }
+
+  async function salvarCampo(campo) {
+    const chave = campo.dataset.chave;
+    const { error } = await sb.from('conteudo').update({ valor: campo.value }).eq('chave', chave);
+    if (error) return avisar('Não consegui salvar: ' + error.message, true);
+    const ok = $('ok-' + chave.replace(/\./g, '-'));
+    if (ok) { ok.classList.add('ver'); setTimeout(() => ok.classList.remove('ver'), 1800); }
+  }
+
+  function trocarImagem(chave) {
+    const inp = document.createElement('input');
+    inp.type = 'file'; inp.accept = 'image/*';
+    inp.onchange = async () => {
+      const arq = inp.files[0]; if (!arq) return;
+      if (arq.size > 3 * 1024 * 1024) return avisar('Imagem muito grande. O limite é 3 MB.', true);
+      avisar('Enviando imagem…');
+      const nome = Date.now() + '-' + arq.name.toLowerCase().replace(/[^a-z0-9.]+/g, '-');
+      const { error } = await sb.storage.from('site').upload(nome, arq);
+      if (error) return avisar('Falhou o envio: ' + error.message, true);
+      const { data } = sb.storage.from('site').getPublicUrl(nome);
+      await sb.from('conteudo').update({ valor: data.publicUrl }).eq('chave', chave);
+      avisar('Imagem trocada. Recarregue o site para conferir.');
+      carregarConteudo();
+    };
+    inp.click();
+  }
+
+  /* ═══════════ áreas e dúvidas ═══════════ */
+  const ICONES = ['wind','cloud-rain','users','battery-low','compass','moon','brain','heart',
+                  'school','puzzle','sparkles','shield','sun','activity','book-open','clipboard-list'];
+  let areas = [];
+  let duvidas = [];
+
+  async function carregarAreas() {
+    const { data, error } = await sb.from('areas').select('*').order('ordem');
+    if (error) return avisar(faltaTabela(error, 'areas'), true);
+    areas = data || [];
+    $('lista-areas').innerHTML = areas.length
+      ? areas.map((a, i) => fichaItem('area', a, i, areas.length)).join('')
+      : '<div class="vazio">Nenhuma área cadastrada.</div>';
+  }
+
+  async function carregarFaq() {
+    const { data, error } = await sb.from('faq').select('*').order('ordem');
+    if (error) return avisar(faltaTabela(error, 'faq'), true);
+    duvidas = data || [];
+    $('lista-faq').innerHTML = duvidas.length
+      ? duvidas.map((f, i) => fichaItem('faq', f, i, duvidas.length)).join('')
+      : '<div class="vazio">Nenhuma dúvida cadastrada.</div>';
+  }
+
+  function fichaItem(tipo, it, i, total) {
+    const ehArea  = tipo === 'area';
+    const titulo  = ehArea ? it.titulo : it.pergunta;
+    const texto   = ehArea ? it.texto  : it.resposta;
+    const campoT  = ehArea ? 'titulo'  : 'pergunta';
+    const campoD  = ehArea ? 'texto'   : 'resposta';
+
+    return '<div class="ficha">'
+      + '<div style="display:flex;gap:10px;align-items:center;margin-bottom:12px">'
+      +   '<span class="tag' + (it.ativo ? '' : ' rascunho') + '">' + (it.ativo ? 'No site' : 'Oculto') + '</span>'
+      +   '<div class="ordem" style="margin-left:auto">'
+      +     '<button data-mover="' + tipo + ':' + it.id + ':-1"' + (i === 0 ? ' disabled' : '') + ' title="Subir" type="button">↑</button>'
+      +     '<button data-mover="' + tipo + ':' + it.id + ':1"'  + (i === total - 1 ? ' disabled' : '') + ' title="Descer" type="button">↓</button>'
+      +   '</div>'
+      + '</div>'
+      + (ehArea
+          ? '<div class="campo"><label>Ícone</label><select data-campo="icone">'
+            + ICONES.map(ic => '<option' + (ic === it.icone ? ' selected' : '') + '>' + ic + '</option>').join('')
+            + '</select></div>'
+          : '')
+      + '<div class="campo"><label>' + (ehArea ? 'Título' : 'Pergunta') + '</label>'
+      +   '<input type="text" data-campo="' + campoT + '" value="' + escapar(titulo) + '"></div>'
+      + '<div class="campo"><label>' + (ehArea ? 'Texto' : 'Resposta') + '</label>'
+      +   '<textarea data-campo="' + campoD + '" style="min-height:80px">' + escapar(texto) + '</textarea></div>'
+      + '<div style="display:flex;gap:10px;flex-wrap:wrap">'
+      +   '<button class="btn btn-p btn-min" data-salvar="' + tipo + ':' + it.id + '" type="button">Salvar</button>'
+      +   '<button class="btn btn-s btn-min" data-visivel="' + tipo + ':' + it.id + ':' + it.ativo + '" type="button">'
+      +     (it.ativo ? 'Ocultar do site' : 'Mostrar no site') + '</button>'
+      +   '<button class="btn btn-x btn-min" data-remover="' + tipo + ':' + it.id + '" type="button">Apagar</button>'
+      + '</div></div>';
+  }
+
+  const nomeTabela = (t) => (t === 'area' ? 'areas' : 'faq');
+  const recarregar = (t) => (t === 'area' ? carregarAreas() : carregarFaq());
+
+  document.addEventListener('click', async (e) => {
+    const b = e.target.closest('button'); if (!b) return;
+
+    if (b.dataset.salvar) {
+      const [tipo, id] = b.dataset.salvar.split(':');
+      const dados = {};
+      b.closest('.ficha').querySelectorAll('[data-campo]').forEach(c => { dados[c.dataset.campo] = c.value; });
+      const { error } = await sb.from(nomeTabela(tipo)).update(dados).eq('id', id);
+      avisar(error ? 'Não salvou: ' + error.message : 'Salvo.', !!error);
+      if (!error) recarregar(tipo);
+    }
+
+    if (b.dataset.visivel) {
+      const [tipo, id, ativo] = b.dataset.visivel.split(':');
+      await sb.from(nomeTabela(tipo)).update({ ativo: ativo !== 'true' }).eq('id', id);
+      recarregar(tipo);
+    }
+
+    if (b.dataset.remover) {
+      const [tipo, id] = b.dataset.remover.split(':');
+      if (!confirm('Apagar este item? Isso não tem volta.')) return;
+      await sb.from(nomeTabela(tipo)).delete().eq('id', id);
+      avisar('Apagado.');
+      recarregar(tipo);
+    }
+
+    if (b.dataset.mover) {
+      const [tipo, id, passo] = b.dataset.mover.split(':');
+      const lista = tipo === 'area' ? areas : duvidas;
+      const i = lista.findIndex(x => x.id === id), j = i + Number(passo);
+      if (j < 0 || j >= lista.length) return;
+      await Promise.all([
+        sb.from(nomeTabela(tipo)).update({ ordem: lista[j].ordem }).eq('id', lista[i].id),
+        sb.from(nomeTabela(tipo)).update({ ordem: lista[i].ordem }).eq('id', lista[j].id)
+      ]);
+      recarregar(tipo);
+    }
+  });
+
+  $('btn-nova-area').addEventListener('click', async () => {
+    const { error } = await sb.from('areas').insert({
+      icone: 'sparkles', titulo: 'Nova área', texto: 'Descreva aqui.',
+      ordem: (areas.length ? areas[areas.length - 1].ordem : 0) + 1, ativo: false
+    });
+    if (error) return avisar(faltaTabela(error, 'areas'), true);
+    avisar('Área criada como oculta. Edite e depois mostre no site.');
+    carregarAreas();
+  });
+
+  $('btn-nova-duvida').addEventListener('click', async () => {
+    const { error } = await sb.from('faq').insert({
+      pergunta: 'Nova pergunta', resposta: 'Escreva a resposta aqui.',
+      ordem: (duvidas.length ? duvidas[duvidas.length - 1].ordem : 0) + 1, ativo: false
+    });
+    if (error) return avisar(faltaTabela(error, 'faq'), true);
+    avisar('Dúvida criada como oculta. Edite e depois mostre no site.');
+    carregarFaq();
+  });
 
   /* ---------- listar ---------- */
   async function carregar() {

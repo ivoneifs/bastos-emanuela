@@ -145,9 +145,9 @@
         EB
       </span>
       <span class="leading-tight">
-        <span class="block font-serif text-lg text-grafite">Emanuela Bastos</span>
+        <span class="block font-serif text-lg text-grafite" data-c="marca.nome">Emanuela Bastos</span>
         <span class="block text-[10px] font-medium uppercase leading-[1.6] tracking-[0.14em] text-salvia-600">
-          Neuropsicóloga clínica · CRP 03/11614<br>Infantojuvenil e adulto
+          <span data-c="marca.papel">Neuropsicóloga clínica · CRP 03/11614</span><br><span data-c="marca.papel2">Infantojuvenil e adulto</span>
         </span>
       </span>
     </a>
@@ -220,22 +220,22 @@
     <!-- texto -->
     <div class="animate-subir">
       <p class="mb-6 flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-terra">
-        Neuropsicologia
+        <span data-c="hero.eyebrow">Neuropsicologia</span>
         <span class="h-px w-12 bg-terra/40"></span>
       </p>
 
       <h1 class="font-serif text-4xl leading-[1.1] text-grafite sm:text-5xl lg:text-6xl">
-        Um espaço para você<br>
-        <span class="italic text-salvia-600">colocar as coisas no lugar.</span>
+        <span data-c="hero.titulo1">Um espaço para você</span><br>
+        <span class="italic text-salvia-600" data-c="hero.titulo2">colocar as coisas no lugar.</span>
       </h1>
 
-      <p class="mt-7 max-w-prosa text-base leading-relaxed text-salvia-800/80 sm:text-lg">
+      <p class="mt-7 max-w-prosa text-base leading-relaxed text-salvia-800/80 sm:text-lg" data-c="hero.paragrafo">
         A terapia é um encontro reservado, no seu tempo, para olhar com calma para o que
         vem incomodando. Aqui você fala sem pressa e sem julgamento, e a gente organiza
         junto o que hoje parece confuso.
       </p>
 
-      <p class="mt-4 text-sm text-salvia-700">
+      <p class="mt-4 text-sm text-salvia-700" data-c="hero.atendimento">
         Atendimento on-line e presencial · Irecê e região, BA
       </p>
 
@@ -244,7 +244,7 @@
            target="_blank" rel="noopener"
            class="inline-flex items-center gap-2 rounded-full bg-salvia-500 px-7 py-4 text-xs font-semibold uppercase tracking-[0.12em] text-white shadow-lg shadow-salvia-500/25 transition-all duration-300 hover:-translate-y-0.5 hover:bg-salvia-600 hover:shadow-xl hover:shadow-salvia-500/30">
           <i data-lucide="message-circle" class="h-4 w-4"></i>
-          Agendar uma sessão
+          <span data-c="hero.botao">Agendar uma sessão</span>
         </a>
         <a href="#agendamento"
            class="inline-flex items-center gap-2 rounded-full border border-salvia-300 bg-white/60 px-7 py-4 text-xs font-semibold uppercase tracking-[0.12em] text-salvia-700 transition-all duration-300 hover:-translate-y-0.5 hover:border-salvia-500 hover:text-grafite">
@@ -258,14 +258,14 @@
     <figure class="relative mx-auto w-full max-w-md lg:max-w-none">
       <div aria-hidden="true"
            class="absolute -bottom-5 -right-5 h-2/3 w-2/3 rounded-[2rem] border border-terra/40"></div>
-      <img src="images/emanuela-hero.webp" width="1200" height="1599"
+      <img data-c="hero.imagem" src="images/emanuela-hero.webp" width="1200" height="1599"
            alt="Emanuela Bastos, neuropsicóloga, no consultório, apoiada sobre manuais de testes."
            fetchpriority="high" decoding="async"
            class="relative w-full rounded-[2rem] object-cover shadow-2xl shadow-salvia-800/15">
 
       <figcaption class="absolute -left-3 bottom-8 max-w-[13rem] rounded-2xl bg-white/95 p-5 shadow-xl backdrop-blur-sm sm:-left-6">
-        <p class="font-serif text-2xl leading-none text-salvia-600">50 min</p>
-        <p class="mt-2 text-xs leading-snug text-salvia-800/70">
+        <p class="font-serif text-2xl leading-none text-salvia-600" data-c="hero.selo">50 min</p>
+        <p class="mt-2 text-xs leading-snug text-salvia-800/70" data-c="hero.selo_texto">
           É o tempo de cada sessão, no consultório ou por vídeo.
         </p>
       </figcaption>
@@ -279,9 +279,9 @@
     <i data-lucide="quote" class="mx-auto mb-7 h-8 w-8 text-terra/70" aria-hidden="true"></i>
     <blockquote class="revelar">
       <p class="font-serif text-2xl italic leading-snug text-areia sm:text-3xl lg:text-4xl">
-        “Quem olha para fora, sonha. Quem olha para dentro, desperta.”
+        “<span data-c="citacao.texto">Quem olha para fora, sonha. Quem olha para dentro, desperta.</span>”
       </p>
-      <footer class="mt-6 text-xs font-medium uppercase tracking-[0.22em] text-salvia-200">
+      <footer class="mt-6 text-xs font-medium uppercase tracking-[0.22em] text-salvia-200" data-c="citacao.autor">
         Carl Gustav Jung
       </footer>
     </blockquote>
@@ -294,19 +294,19 @@
 
     <div class="revelar max-w-prosa">
       <p class="mb-5 flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-terra">
-        Áreas de atuação
+        <span data-c="areas.eyebrow">Áreas de atuação</span>
         <span class="h-px w-12 bg-terra/40"></span>
       </p>
-      <h2 class="font-serif text-3xl leading-tight text-grafite sm:text-4xl lg:text-5xl">
+      <h2 class="font-serif text-3xl leading-tight text-grafite sm:text-4xl lg:text-5xl" data-c="areas.titulo">
         Assuntos que costumam abrir uma conversa.
       </h2>
-      <p class="mt-5 text-base leading-relaxed text-salvia-800/75">
+      <p class="mt-5 text-base leading-relaxed text-salvia-800/75" data-c="areas.intro">
         Você não precisa chegar com o problema já nomeado. Se algo vem pesando, isso já
         basta para começarmos.
       </p>
     </div>
 
-    <div class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    <div class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3" id="areas-lista">
 
       <!-- card: ansiedade -->
       <article class="revelar group rounded-3xl border border-salvia-100 bg-white p-8 shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:border-salvia-200 hover:shadow-xl hover:shadow-salvia-800/10">
@@ -391,32 +391,32 @@
     <figure class="revelar relative mx-auto w-full max-w-sm lg:max-w-none">
       <div aria-hidden="true"
            class="absolute -left-5 -top-5 h-2/3 w-2/3 rounded-[2rem] border border-salvia-300"></div>
-      <img src="images/emanuela-sobre.webp" width="900" height="1199" loading="lazy" decoding="async"
+      <img data-c="sobre.imagem" src="images/emanuela-sobre.webp" width="900" height="1199" loading="lazy" decoding="async"
            alt="Emanuela Bastos em seu consultório."
            class="relative w-full rounded-[2rem] object-cover shadow-2xl shadow-salvia-800/15">
     </figure>
 
     <div class="revelar">
       <p class="mb-5 flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-terra">
-        Sobre mim
+        <span data-c="sobre.eyebrow">Sobre mim</span>
         <span class="h-px w-12 bg-terra/40"></span>
       </p>
-      <h2 class="font-serif text-3xl leading-tight text-grafite sm:text-4xl lg:text-5xl">
+      <h2 class="font-serif text-3xl leading-tight text-grafite sm:text-4xl lg:text-5xl" data-c="sobre.titulo">
         Prazer, eu sou a Emanuela.
       </h2>
 
       <div class="mt-6 space-y-4 text-base leading-relaxed text-salvia-800/80">
-        <p>
+        <p data-c="sobre.p1">
           Sou neuropsicóloga, inscrita no CRP 03/11614, e atendo adolescentes, adultos e idosos
           em Irecê e região, na Bahia — de forma presencial e também por vídeo.
         </p>
-        <p>
+        <p data-c="sobre.p2">
           Meu trabalho começa pela escuta. Antes de qualquer proposta, eu preciso entender
           a sua história, o seu contexto e o que te trouxe até aqui. A partir daí,
           construímos juntos um caminho de acompanhamento, com objetivos combinados e
           revisados ao longo do processo.
         </p>
-        <p>
+        <p data-c="sobre.p3">
           Além do acompanhamento clínico, também realizo avaliação neuropsicológica, com
           instrumentos aplicados de acordo com a idade e a demanda de cada pessoa.
         </p>
@@ -425,19 +425,19 @@
       <ul class="mt-8 grid gap-3 sm:grid-cols-2">
         <li class="flex items-start gap-3 text-sm text-salvia-800/80">
           <i data-lucide="graduation-cap" class="mt-0.5 h-4 w-4 shrink-0 text-terra"></i>
-          <span>Graduação em Psicologia — UNIME, 2012</span>
+          <span data-c="sobre.formacao1">Graduação em Psicologia — UNIME, 2012</span>
         </li>
         <li class="flex items-start gap-3 text-sm text-salvia-800/80">
           <i data-lucide="graduation-cap" class="mt-0.5 h-4 w-4 shrink-0 text-terra"></i>
-          <span>Especialização em Neuropsicologia — Realiza</span>
+          <span data-c="sobre.formacao2">Especialização em Neuropsicologia — Realiza</span>
         </li>
         <li class="flex items-start gap-3 text-sm text-salvia-800/80">
           <i data-lucide="book-open" class="mt-0.5 h-4 w-4 shrink-0 text-terra"></i>
-          <span>Especialização em Terapia Cognitivo-Comportamental — Realiza</span>
+          <span data-c="sobre.formacao3">Especialização em Terapia Cognitivo-Comportamental — Realiza</span>
         </li>
         <li class="flex items-start gap-3 text-sm text-salvia-800/80">
           <i data-lucide="shield-check" class="mt-0.5 h-4 w-4 shrink-0 text-terra"></i>
-          <span>Sigilo garantido pelo Código de Ética Profissional</span>
+          <span data-c="sobre.formacao4">Sigilo garantido pelo Código de Ética Profissional</span>
         </li>
       </ul>
 
@@ -457,13 +457,13 @@
 
     <div class="revelar max-w-prosa">
       <p class="mb-5 flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-terra">
-        Como funciona
+        <span data-c="agenda.eyebrow">Como funciona</span>
         <span class="h-px w-12 bg-terra/40"></span>
       </p>
-      <h2 class="font-serif text-3xl leading-tight text-grafite sm:text-4xl lg:text-5xl">
+      <h2 class="font-serif text-3xl leading-tight text-grafite sm:text-4xl lg:text-5xl" data-c="agenda.titulo">
         Agendar é simples — em três passos.
       </h2>
-      <p class="mt-5 text-base leading-relaxed text-salvia-800/75">
+      <p class="mt-5 text-base leading-relaxed text-salvia-800/75" data-c="agenda.intro">
         O atendimento acontece <strong class="font-medium text-grafite">presencialmente,
         no consultório, ou on-line por vídeo</strong> — você escolhe o formato que couber
         melhor na sua rotina.
@@ -478,8 +478,8 @@
         <div class="mb-6 grid h-12 w-12 place-items-center rounded-2xl bg-salvia-50 text-salvia-600 transition-colors duration-300 group-hover:bg-salvia-500 group-hover:text-white">
           <i data-lucide="message-square-text" class="h-5 w-5"></i>
         </div>
-        <h3 class="font-serif text-xl text-grafite">Entre em contato pelo WhatsApp</h3>
-        <p class="mt-3 text-sm leading-relaxed text-salvia-800/75">
+        <h3 class="font-serif text-xl text-grafite" data-c="agenda.p1t">Entre em contato pelo WhatsApp</h3>
+        <p class="mt-3 text-sm leading-relaxed text-salvia-800/75" data-c="agenda.p1d">
           Me mande uma mensagem contando, em poucas linhas, o que te levou a procurar
           terapia. Respondo pessoalmente e tiro as dúvidas iniciais.
         </p>
@@ -491,8 +491,8 @@
         <div class="mb-6 grid h-12 w-12 place-items-center rounded-2xl bg-salvia-50 text-salvia-600 transition-colors duration-300 group-hover:bg-salvia-500 group-hover:text-white">
           <i data-lucide="calendar-check" class="h-5 w-5"></i>
         </div>
-        <h3 class="font-serif text-xl text-grafite">Agende a sua sessão</h3>
-        <p class="mt-3 text-sm leading-relaxed text-salvia-800/75">
+        <h3 class="font-serif text-xl text-grafite" data-c="agenda.p2t">Agende a sua sessão</h3>
+        <p class="mt-3 text-sm leading-relaxed text-salvia-800/75" data-c="agenda.p2d">
           Combinamos o dia, o horário e o formato — presencial ou on-line. Você recebe a
           confirmação com todas as orientações antes do encontro.
         </p>
@@ -504,8 +504,8 @@
         <div class="mb-6 grid h-12 w-12 place-items-center rounded-2xl bg-salvia-50 text-salvia-600 transition-colors duration-300 group-hover:bg-salvia-500 group-hover:text-white">
           <i data-lucide="armchair" class="h-5 w-5"></i>
         </div>
-        <h3 class="font-serif text-xl text-grafite">Pronto: sessão agendada</h3>
-        <p class="mt-3 text-sm leading-relaxed text-salvia-800/75">
+        <h3 class="font-serif text-xl text-grafite" data-c="agenda.p3t">Pronto: sessão agendada</h3>
+        <p class="mt-3 text-sm leading-relaxed text-salvia-800/75" data-c="agenda.p3d">
           A sessão dura cerca de 50 minutos e acontece de forma tranquila, no consultório
           ou on-line. Não é preciso preparar nada — só chegar.
         </p>
@@ -558,10 +558,10 @@
 
     <div class="revelar">
       <p class="mb-5 flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-terra">
-        Dúvidas frequentes
+        <span data-c="faq.eyebrow">Dúvidas frequentes</span>
         <span class="h-px w-12 bg-terra/40"></span>
       </p>
-      <h2 class="font-serif text-3xl leading-tight text-grafite sm:text-4xl lg:text-5xl">
+      <h2 class="font-serif text-3xl leading-tight text-grafite sm:text-4xl lg:text-5xl" data-c="faq.titulo">
         O que costumam me perguntar antes da primeira sessão.
       </h2>
     </div>
@@ -633,13 +633,13 @@
 
     <div class="revelar max-w-prosa">
       <p class="mb-5 flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-terra">
-        Blog
+        <span data-c="blog.eyebrow">Blog</span>
         <span class="h-px w-12 bg-terra/40"></span>
       </p>
-      <h2 class="font-serif text-3xl leading-tight text-grafite sm:text-4xl lg:text-5xl">
+      <h2 class="font-serif text-3xl leading-tight text-grafite sm:text-4xl lg:text-5xl" data-c="blog.titulo">
         Avaliação, reabilitação e neuroeducação.
       </h2>
-      <p class="mt-5 text-base leading-relaxed text-salvia-800/75">
+      <p class="mt-5 text-base leading-relaxed text-salvia-800/75" data-c="blog.intro">
         Três frentes do meu trabalho, explicadas sem jargão. Conteúdo informativo: não
         substitui consulta nem serve para autodiagnóstico — é material para você chegar
         mais informada ou informado à conversa.
@@ -914,10 +914,10 @@
   <div aria-hidden="true"
        class="pointer-events-none absolute left-1/2 top-0 h-96 w-[42rem] -translate-x-1/2 rounded-full bg-salvia-600/40 blur-3xl"></div>
   <div class="revelar relative mx-auto max-w-2xl px-5 sm:px-8">
-    <h2 class="font-serif text-3xl leading-tight text-areia sm:text-4xl lg:text-5xl">
+    <h2 class="font-serif text-3xl leading-tight text-areia sm:text-4xl lg:text-5xl" data-c="final.titulo">
       Dar o primeiro passo já é parte do processo.
     </h2>
-    <p class="mx-auto mt-5 max-w-lg text-base leading-relaxed text-salvia-100/85">
+    <p class="mx-auto mt-5 max-w-lg text-base leading-relaxed text-salvia-100/85" data-c="final.texto">
       Se você chegou até aqui, talvez seja um bom momento para conversar. Me mande uma
       mensagem quando se sentir pronta ou pronto.
     </p>
@@ -925,7 +925,7 @@
        target="_blank" rel="noopener"
        class="mt-10 inline-flex items-center gap-2 rounded-full bg-areia px-8 py-4 text-xs font-semibold uppercase tracking-[0.12em] text-salvia-800 shadow-xl transition-all duration-300 hover:-translate-y-0.5 hover:bg-white">
       <i data-lucide="message-circle" class="h-4 w-4"></i>
-      Agendar pelo WhatsApp
+      <span data-c="final.botao">Agendar pelo WhatsApp</span>
     </a>
   </div>
 </section>
@@ -943,13 +943,13 @@
         <div class="flex items-center gap-3">
           <span class="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-terra/60 font-serif text-sm text-terra">EB</span>
           <span class="leading-tight">
-            <span class="block font-serif text-lg text-areia">Emanuela Bastos</span>
+            <span class="block font-serif text-lg text-areia" data-c="marca.nome">Emanuela Bastos</span>
             <span class="block text-[10px] font-medium uppercase leading-[1.6] tracking-[0.14em] text-salvia-300">
-              Neuropsicóloga clínica · CRP 03/11614<br>Infantojuvenil e adulto
+              <span data-c="marca.papel">Neuropsicóloga clínica · CRP 03/11614</span><br><span data-c="marca.papel2">Infantojuvenil e adulto</span>
             </span>
           </span>
         </div>
-        <p class="mt-5 max-w-xs text-sm leading-relaxed">
+        <p class="mt-5 max-w-xs text-sm leading-relaxed" data-c="rodape.descricao">
           Atendimento psicológico on-line e presencial, com escuta cuidadosa e sigilo
           garantido pelo Código de Ética Profissional do Psicólogo.
         </p>
@@ -996,22 +996,22 @@
           <li class="flex items-start gap-3">
             <i data-lucide="phone" class="mt-0.5 h-4 w-4 shrink-0 text-terra"></i>
             <a href="https://wa.me/5574981249127" target="_blank" rel="noopener" class="inline-block py-2 transition-colors hover:text-areia">
-              (74) 98124-9127
+              <span data-c="contato.telefone">(74) 98124-9127</span>
             </a>
           </li>
           <li class="flex items-start gap-3">
             <i data-lucide="mail" class="mt-0.5 h-4 w-4 shrink-0 text-terra"></i>
             <a href="mailto:Emanuela.basttos@gmail.com" class="inline-block break-all py-2 transition-colors hover:text-areia">
-              Emanuela.basttos@gmail.com
+              <span data-c="contato.email">Emanuela.basttos@gmail.com</span>
             </a>
           </li>
           <li class="flex items-start gap-3">
             <i data-lucide="map-pin" class="mt-0.5 h-4 w-4 shrink-0 text-terra"></i>
-            <span>Irecê e região — Bahia<br>Endereço do consultório enviado na confirmação</span>
+            <span><span data-c="contato.endereco1">Irecê e região — Bahia</span><br><span data-c="contato.endereco2">Endereço do consultório enviado na confirmação</span></span>
           </li>
           <li class="flex items-start gap-3">
             <i data-lucide="clock" class="mt-0.5 h-4 w-4 shrink-0 text-terra"></i>
-            <span>Atendimento com hora marcada,<br>presencial e on-line</span>
+            <span data-c="contato.horario">Atendimento com hora marcada, presencial e on-line</span>
           </li>
         </ul>
       </div>
@@ -1184,6 +1184,103 @@ document.addEventListener('DOMContentLoaded', function () {
     if (e.key === 'Escape' && !leitor.classList.contains('hidden')) fecharArtigo();
   });
 
+  /* onde o site busca o conteúdo editável */
+  var SUPABASE = {
+    url:  'https://yzxoyxzmteqvmayqtdly.supabase.co',
+    anon: 'sb_publishable_8GC7Erzdg0OauPtM07mAtg_m9De9Kj2'   // publicável, pode ficar visível
+  };
+
+  /* ═══════════════════════════════════════════════════════════
+     CONTEÚDO VINDO DO PAINEL
+
+     Tudo que está escrito no HTML acima já é o site funcionando.
+     Este bloco apenas SUBSTITUI o que estiver salvo no banco. Se o
+     banco não responder, a página continua completa como está.
+     ═══════════════════════════════════════════════════════════ */
+
+  function daTabela(nome, filtro) {
+    if (!SUPABASE.url || !SUPABASE.anon) return Promise.reject('sem config');
+    return fetch(SUPABASE.url.replace(/\/$/, '') + '/rest/v1/' + nome + (filtro || ''), {
+      headers: { apikey: SUPABASE.anon, Authorization: 'Bearer ' + SUPABASE.anon }
+    }).then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); });
+  }
+
+  /* ---------- textos e imagens soltos ---------- */
+  function aplicarConteudo(linhas) {
+    if (!Array.isArray(linhas)) return;
+    var mapa = {};
+    linhas.forEach(function (l) { mapa[l.chave] = l; });
+
+    document.querySelectorAll('[data-c]').forEach(function (el) {
+      var item = mapa[el.getAttribute('data-c')];
+      if (!item || item.valor == null || item.valor === '') return;
+
+      if (item.tipo === 'imagem') {
+        el.setAttribute('src', item.valor);
+        el.removeAttribute('srcset');
+      } else if (item.tipo === 'link') {
+        el.setAttribute('href', item.valor);
+      } else {
+        el.textContent = item.valor;
+      }
+    });
+
+    /* o número do WhatsApp reescreve todos os botões de uma vez */
+    var tel = mapa['contato.whatsapp'] && mapa['contato.whatsapp'].valor;
+    if (tel) {
+      document.querySelectorAll('a[href*="wa.me/"]').forEach(function (a) {
+        a.href = a.href.replace(/wa\.me\/\d+/, 'wa.me/' + tel);
+      });
+    }
+    var mail = mapa['contato.email'] && mapa['contato.email'].valor;
+    if (mail) {
+      document.querySelectorAll('a[href^="mailto:"]').forEach(function (a) { a.href = 'mailto:' + mail; });
+    }
+    var insta = mapa['contato.instagram'] && mapa['contato.instagram'].valor;
+    if (insta) {
+      document.querySelectorAll('a[href*="instagram.com"]').forEach(function (a) { a.href = insta; });
+    }
+  }
+
+  /* ---------- áreas de atuação ---------- */
+  function aplicarAreas(itens) {
+    var caixa = document.getElementById('areas-lista');
+    if (!caixa || !Array.isArray(itens) || !itens.length) return;
+    caixa.innerHTML = itens.map(function (a) {
+      return '<article class="revelar group rounded-3xl border border-salvia-100 bg-white p-8 shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:border-salvia-200 hover:shadow-xl hover:shadow-salvia-800/10">'
+        + '<div class="mb-6 grid h-12 w-12 place-items-center rounded-2xl bg-salvia-50 text-salvia-600 transition-colors duration-300 group-hover:bg-salvia-500 group-hover:text-white">'
+        +   '<i data-lucide="' + esc(a.icone || 'circle') + '" class="h-5 w-5"></i>'
+        + '</div>'
+        + '<h3 class="font-serif text-xl text-grafite">' + esc(a.titulo) + '</h3>'
+        + '<p class="mt-3 text-sm leading-relaxed text-salvia-800/75">' + esc(a.texto) + '</p>'
+        + '</article>';
+    }).join('');
+  }
+
+  /* ---------- dúvidas frequentes ---------- */
+  function aplicarFaq(itens) {
+    var caixa = document.getElementById('faq-lista');
+    if (!caixa || !Array.isArray(itens) || !itens.length) return;
+    caixa.innerHTML = itens.map(function (f, i) {
+      var id = 'faq-corpo-' + (i + 1);
+      return '<div class="faq-item overflow-hidden rounded-2xl border border-salvia-200 bg-white" data-aberto="false">'
+        + '<h3><button type="button" aria-expanded="false" aria-controls="' + id + '"'
+        +   ' class="flex w-full items-center justify-between gap-4 px-6 py-5 text-left font-serif text-lg text-grafite transition-colors hover:bg-salvia-50/60">'
+        +   '<span>' + esc(f.pergunta) + '</span>'
+        +   '<i data-lucide="chevron-down" class="faq-seta h-5 w-5 shrink-0 text-salvia-500 transition-transform duration-300"></i>'
+        + '</button></h3>'
+        + '<div id="' + id + '" class="faq-corpo">'
+        +   '<p class="px-6 pb-6 text-sm leading-relaxed text-salvia-800/75">' + esc(f.resposta) + '</p>'
+        + '</div></div>';
+    }).join('');
+  }
+
+  var conteudoPronto = Promise.all([
+    daTabela('conteudo', '?select=chave,valor,tipo').then(aplicarConteudo).catch(function(){}),
+    daTabela('areas', '?select=icone,titulo,texto&ativo=eq.true&order=ordem.asc').then(aplicarAreas).catch(function(){}),
+    daTabela('faq', '?select=pergunta,resposta&ativo=eq.true&order=ordem.asc').then(aplicarFaq).catch(function(){})
+  ]).then(desenharIcones, desenharIcones);
+
   /* ═══════════════════════════════════════════════════════════
      POSTAGENS DO BLOG (content/posts.json)
 
@@ -1241,11 +1338,6 @@ document.addEventListener('DOMContentLoaded', function () {
      2. arquivo content/posts.json
      3. os três artigos escritos no HTML acima
      Qualquer falha simplesmente cai para o próximo nível. */
-  var SUPABASE = {
-    url:  'https://yzxoyxzmteqvmayqtdly.supabase.co',
-    anon: 'sb_publishable_8GC7Erzdg0OauPtM07mAtg_m9De9Kj2'   // publicável, pode ficar visível
-  };
-
   function doSupabase() {
     if (!SUPABASE.url || !SUPABASE.anon) return Promise.reject('sem config');
     var alvo = SUPABASE.url.replace(/\/$/, '')
@@ -1316,7 +1408,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   /* so depois que as postagens do painel entraram na pagina */
-  blogPronto.then(ligarRevelacao, ligarRevelacao);
+  Promise.all([blogPronto, conteudoPronto]).then(ligarRevelacao, ligarRevelacao);
 });
 </script>
 </body>
