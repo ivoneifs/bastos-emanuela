@@ -1236,10 +1236,35 @@ document.addEventListener('DOMContentLoaded', function () {
       '</article>';
   }
 
-  var blogPronto = fetch('content/posts.json', { cache: 'no-cache' })
-    .then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
-    .then(function (dados) {
-      var posts = dados && dados.posts;
+  /* De onde vêm as postagens, em ordem de preferência:
+     1. banco do Supabase (editável pelo painel em /admin)
+     2. arquivo content/posts.json
+     3. os três artigos escritos no HTML acima
+     Qualquer falha simplesmente cai para o próximo nível. */
+  var SUPABASE = {
+    url:  'https://yzxoyxzmteqvmayqtdly.supabase.co',
+    anon: ''    // chave "anon" / "public" — pode ficar visível
+  };
+
+  function doSupabase() {
+    if (!SUPABASE.url || !SUPABASE.anon) return Promise.reject('sem config');
+    var alvo = SUPABASE.url.replace(/\/$/, '')
+             + '/rest/v1/posts?select=titulo,categoria,resumo,imagem,imagem_alt,corpo'
+             + '&publicado=eq.true&order=ordem.asc,criado_em.desc';
+    return fetch(alvo, {
+      headers: { apikey: SUPABASE.anon, Authorization: 'Bearer ' + SUPABASE.anon }
+    }).then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); });
+  }
+
+  function doArquivo() {
+    return fetch('content/posts.json', { cache: 'no-cache' })
+      .then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
+      .then(function (d) { return d && d.posts; });
+  }
+
+  var blogPronto = doSupabase()
+    .catch(doArquivo)
+    .then(function (posts) {
       if (!blogLista || !Array.isArray(posts) || !posts.length) return;
       blogLista.innerHTML = posts.map(montarCard).join('');
       desenharIcones();

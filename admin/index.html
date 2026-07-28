@@ -7,129 +7,468 @@
 <meta name="referrer" content="no-referrer">
 <title>Painel do blog — Emanuela Bastos</title>
 <link rel="icon" href="../images/favicon.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
-  html, body { margin: 0; min-height: 100%; background: #F7F5F0;
-               font-family: Inter, system-ui, -apple-system, 'Segoe UI', sans-serif; color: #2B352A; }
+:root{
+  --areia:#F7F5F0; --areia2:#EFEBE3; --branco:#fff;
+  --salvia:#6F8869; --salvia-esc:#5A7055; --salvia-clara:#E3EAE0; --salvia-50:#F1F4EF;
+  --grafite:#2B352A; --terra:#B08968; --erro:#B4453C;
+  --serif:'Playfair Display',Georgia,serif;
+  --sans:Inter,system-ui,-apple-system,'Segoe UI',sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;min-height:100%}
+body{background:var(--areia);color:var(--grafite);font-family:var(--sans);font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:var(--serif);font-weight:400;margin:0;line-height:1.2}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--salvia);outline-offset:2px;border-radius:6px}
+.oculto{display:none!important}
 
-  /* telas de espera e de diagnóstico, sobrepostas ao painel */
-  .tela { position: fixed; inset: 0; z-index: 9999; display: grid; place-items: center;
-          background: #F7F5F0; padding: 24px; overflow-y: auto; }
-  .caixa { max-width: 34rem; width: 100%; }
-  .marca { width: 56px; height: 56px; margin: 0 auto 20px; border-radius: 50%;
-           border: 1px solid #B08968; color: #B08968; display: grid; place-items: center;
-           font-family: Georgia, serif; font-size: .95rem; letter-spacing: .04em; }
-  h1 { font-family: Georgia, serif; font-weight: 400; font-size: 1.6rem; margin: 0 0 10px; text-align: center; }
-  .sub { margin: 0 0 28px; font-size: .92rem; color: #5A7055; line-height: 1.6; text-align: center; }
+/* ── estrutura ── */
+.topo{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:16px;
+      padding:14px 20px;background:rgba(247,245,240,.92);backdrop-filter:blur(12px);
+      border-bottom:1px solid var(--salvia-clara)}
+.marca{display:flex;align-items:center;gap:11px;margin-right:auto;min-width:0}
+.selo{width:40px;height:40px;flex:none;border-radius:50%;border:1px solid var(--terra);color:var(--terra);
+      display:grid;place-items:center;font-family:var(--serif);font-size:.85rem}
+.marca b{display:block;font-family:var(--serif);font-weight:400;font-size:1.05rem}
+.marca span{display:block;font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;color:var(--salvia-esc)}
+.area{max-width:56rem;margin:0 auto;padding:28px 20px 80px}
 
-  .aviso { border: 1px solid #E3EAE0; background: #fff; border-radius: 18px; padding: 26px 24px; }
-  .aviso h2 { font-family: Georgia, serif; font-weight: 400; font-size: 1.1rem; margin: 0 0 14px; }
-  ol { margin: 0; padding-left: 1.3em; font-size: .9rem; line-height: 1.7; color: #364534; }
-  ol li { margin-bottom: 10px; }
-  ol li:last-child { margin-bottom: 0; }
-  code { background: #F1F4EF; border-radius: 5px; padding: 2px 6px;
-         font-family: ui-monospace, Menlo, Consolas, monospace; font-size: .85em; }
-  a { color: #5A7055; }
-  .estado { margin-top: 22px; padding-top: 18px; border-top: 1px solid #E3EAE0;
-            font-size: .82rem; color: #6F8869; line-height: 1.8; }
-  .estado b { color: #2B352A; font-weight: 600; }
-  .voltar { display: inline-block; margin-top: 24px; font-size: .82rem; }
+/* ── botões ── */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;
+     min-height:42px;padding:10px 20px;border:1px solid transparent;border-radius:999px;
+     font-size:.76rem;font-weight:600;letter-spacing:.09em;text-transform:uppercase;
+     cursor:pointer;text-decoration:none;transition:background-color .2s,border-color .2s,color .2s,transform .2s}
+.btn:hover{transform:translateY(-1px)}
+.btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.btn-p{background:var(--salvia);color:#fff}
+.btn-p:hover{background:var(--salvia-esc)}
+.btn-s{border-color:var(--salvia-clara);background:var(--branco);color:var(--grafite)}
+.btn-s:hover{border-color:var(--salvia)}
+.btn-x{border-color:transparent;background:transparent;color:var(--erro);padding:10px 14px}
+.btn-x:hover{background:#FBEFEE}
+.btn-min{min-height:34px;padding:6px 12px;font-size:.68rem}
 
-  @media (prefers-reduced-motion: no-preference) {
-    .pulsa { animation: pulsa 1.6s ease-in-out infinite; }
-    @keyframes pulsa { 0%,100% { opacity: .45 } 50% { opacity: 1 } }
-  }
+/* ── formulário ── */
+.campo{margin-bottom:20px}
+label{display:block;font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+      color:var(--salvia-esc);margin-bottom:7px}
+.dica{font-size:.78rem;color:#7A8A78;margin:6px 0 0;line-height:1.5}
+input[type=text],input[type=email],input[type=password],input[type=number],select,textarea{
+  width:100%;padding:11px 14px;border:1px solid var(--salvia-clara);border-radius:11px;
+  background:var(--branco);font-size:.94rem}
+textarea{resize:vertical;min-height:120px;line-height:1.7}
+textarea.corpo{min-height:340px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.85rem}
+input:focus,select:focus,textarea:focus{border-color:var(--salvia);outline:none;box-shadow:0 0 0 3px rgba(111,136,105,.14)}
+.linha{display:grid;gap:16px}
+@media(min-width:640px){.linha-2{grid-template-columns:1fr 1fr}}
+
+/* ── cartões ── */
+.cartao{background:var(--branco);border:1px solid var(--salvia-clara);border-radius:18px;padding:24px}
+.post{display:flex;gap:16px;align-items:flex-start;background:var(--branco);
+      border:1px solid var(--salvia-clara);border-radius:16px;padding:14px;margin-bottom:12px}
+.post img{width:104px;height:65px;flex:none;object-fit:cover;border-radius:10px;background:var(--salvia-50)}
+.post-txt{flex:1;min-width:0}
+.post-txt h3{font-size:1rem;margin-bottom:4px}
+.post-txt p{margin:0;font-size:.82rem;color:#7A8A78;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.tag{display:inline-block;font-size:.6rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+     background:var(--salvia-50);color:var(--salvia-esc);border-radius:999px;padding:3px 9px;margin-bottom:6px}
+.tag.rascunho{background:#FBEFEE;color:var(--erro)}
+.post-acoes{display:flex;flex-direction:column;gap:6px;flex:none}
+.ordem{display:flex;gap:4px}
+.ordem button{width:32px;height:30px;border:1px solid var(--salvia-clara);background:var(--branco);
+              border-radius:8px;cursor:pointer;font-size:.8rem;line-height:1}
+.ordem button:hover:not(:disabled){border-color:var(--salvia)}
+.ordem button:disabled{opacity:.35;cursor:not-allowed}
+
+/* ── avisos ── */
+.recado{border-radius:14px;padding:14px 16px;font-size:.86rem;margin-bottom:20px;line-height:1.55}
+.recado.ok{background:var(--salvia-50);border:1px solid var(--salvia-clara);color:var(--salvia-esc)}
+.recado.ruim{background:#FBEFEE;border:1px solid #F0D5D2;color:var(--erro)}
+.vazio{text-align:center;padding:56px 20px;color:#7A8A78}
+
+/* ── tela de login e de configuração ── */
+.centro{min-height:100vh;display:grid;place-items:center;padding:24px}
+.centro .cartao{max-width:26rem;width:100%}
+.centro h1{text-align:center;font-size:1.5rem;margin-bottom:6px}
+.centro .sub{text-align:center;font-size:.86rem;color:#7A8A78;margin:0 0 26px}
+.centro .selo{margin:0 auto 18px}
+code{background:var(--salvia-50);border-radius:5px;padding:2px 6px;
+     font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.85em;word-break:break-all}
+ol.passos{margin:0;padding-left:1.25em;font-size:.88rem;line-height:1.75}
+ol.passos li{margin-bottom:9px}
 </style>
 </head>
 <body>
 
-<!-- enquanto o painel carrega -->
-<div class="tela" id="espera">
-  <div class="caixa" style="text-align:center">
-    <div class="marca pulsa">EB</div>
-    <h1>Painel do blog</h1>
-    <p class="sub">Carregando o editor…</p>
+<!-- ═════════ 1. falta configurar as chaves ═════════ -->
+<div id="tela-config" class="centro oculto">
+  <div class="cartao">
+    <div class="selo">EB</div>
+    <h1>Falta ligar o banco</h1>
+    <p class="sub">O painel está pronto. Só faltam duas informações do Supabase.</p>
+    <ol class="passos">
+      <li>Crie um projeto no Supabase (plano <b>Free</b> serve).</li>
+      <li>No <b>SQL Editor</b>, rode o arquivo <code>supabase/schema.sql</code> deste repositório.</li>
+      <li>Em <b>Project Settings → API</b>, copie a <b>Project URL</b> e a chave <b>anon public</b>.</li>
+      <li>Cole as duas no começo deste arquivo, em <code>CONFIG</code>, e publique de novo.</li>
+    </ol>
+    <p class="dica" style="margin-top:18px">
+      A chave <code>anon</code> é feita para ficar visível no site — quem protege o banco são
+      as regras de acesso criadas pelo schema. Nunca use a chave <code>service_role</code> aqui.
+    </p>
   </div>
 </div>
 
-<!-- se o painel não conseguir subir -->
-<div class="tela" id="ajuda" hidden>
-  <div class="caixa">
-    <div class="marca">EB</div>
-    <h1>Painel ainda não configurado</h1>
-    <p class="sub">
-      O editor está instalado e funcionando. O que falta é ligar o serviço de login
-      no Netlify — e isso só pode ser feito por quem administra a conta.
-    </p>
+<!-- ═════════ 2. login ═════════ -->
+<div id="tela-login" class="centro oculto">
+  <form class="cartao" id="form-login">
+    <div class="selo">EB</div>
+    <h1>Painel do blog</h1>
+    <p class="sub">Entre para escrever e editar as postagens.</p>
 
-    <div class="aviso">
-      <h2>Os quatro passos que faltam</h2>
-      <ol>
-        <li>
-          <s>Enviar o código para o GitHub</s> — feito:
-          <code>ivoneifs/bastos-emanuela</code>.
-        </li>
-        <li>
-          No Netlify, em <b>Site configuration → Build &amp; deploy → Link repository</b>,
-          escolher esse repositório.
-        </li>
-        <li>
-          Em <b>Identity</b>, clicar em <b>Enable Identity</b> e deixar
-          <b>Registration</b> como <b>Invite only</b> — é isso que garante que só a
-          Emanuela consegue entrar.
-        </li>
-        <li>
-          Em <b>Identity → Services</b>, clicar em <b>Enable Git Gateway</b>. Depois,
-          em <b>Invite users</b>, convidar o e-mail da Emanuela.
-        </li>
-      </ol>
+    <div id="erro-login" class="recado ruim oculto"></div>
 
-      <div class="estado">
-        Diagnóstico deste momento:<br>
-        <span id="diag-identity">Verificando o serviço de login…</span>
-      </div>
+    <div class="campo">
+      <label for="login-email">E-mail</label>
+      <input type="email" id="login-email" autocomplete="username" required>
+    </div>
+    <div class="campo">
+      <label for="login-senha">Senha</label>
+      <input type="password" id="login-senha" autocomplete="current-password" required>
     </div>
 
-    <p style="text-align:center">
-      <a class="voltar" href="../">← Voltar para o site</a>
+    <button class="btn btn-p" style="width:100%" id="btn-entrar" type="submit">Entrar</button>
+
+    <p class="dica" style="text-align:center;margin-top:20px">
+      <a href="../" style="color:var(--salvia-esc)">← Voltar para o site</a>
     </p>
+  </form>
+</div>
+
+<!-- ═════════ 3. painel ═════════ -->
+<div id="tela-painel" class="oculto">
+  <header class="topo">
+    <span class="marca">
+      <span class="selo">EB</span>
+      <span>
+        <b>Painel do blog</b>
+        <span id="quem"></span>
+      </span>
+    </span>
+    <a class="btn btn-s btn-min" href="../" target="_blank" rel="noopener">Ver o site</a>
+    <button class="btn btn-s btn-min" id="btn-sair" type="button">Sair</button>
+  </header>
+
+  <div class="area">
+    <div id="recado" class="recado oculto"></div>
+
+    <!-- lista -->
+    <section id="secao-lista">
+      <div style="display:flex;align-items:center;gap:14px;margin-bottom:22px">
+        <h2 style="font-size:1.5rem;margin-right:auto">Postagens</h2>
+        <button class="btn btn-p" id="btn-nova" type="button">+ Nova postagem</button>
+      </div>
+      <div id="lista"></div>
+    </section>
+
+    <!-- editor -->
+    <section id="secao-editor" class="oculto">
+      <div style="display:flex;align-items:center;gap:14px;margin-bottom:22px">
+        <h2 style="font-size:1.5rem;margin-right:auto" id="titulo-editor">Nova postagem</h2>
+        <button class="btn btn-s" id="btn-voltar" type="button">Cancelar</button>
+      </div>
+
+      <form class="cartao" id="form-post">
+        <div class="campo">
+          <label for="f-titulo">Título</label>
+          <input type="text" id="f-titulo" required maxlength="160">
+          <p class="dica">Aparece no card e no topo do artigo.</p>
+        </div>
+
+        <div class="linha linha-2">
+          <div class="campo">
+            <label for="f-categoria">Categoria</label>
+            <select id="f-categoria">
+              <option>Avaliação</option>
+              <option>Reabilitação</option>
+              <option>Neuroeducação</option>
+            </select>
+          </div>
+          <div class="campo">
+            <label for="f-publicado">Situação</label>
+            <select id="f-publicado">
+              <option value="true">Publicado — aparece no site</option>
+              <option value="false">Rascunho — só você vê</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="campo">
+          <label for="f-resumo">Resumo</label>
+          <textarea id="f-resumo" maxlength="320" style="min-height:80px"></textarea>
+          <p class="dica">Duas ou três linhas. É o que se lê no card, antes de “Ler artigo”.</p>
+        </div>
+
+        <div class="campo">
+          <label for="f-imagem">Imagem de capa</label>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+            <input type="text" id="f-imagem" placeholder="images/blog-avaliacao.webp" style="flex:1;min-width:200px">
+            <input type="file" id="f-arquivo" accept="image/*" class="oculto">
+            <button class="btn btn-s btn-min" id="btn-enviar-img" type="button">Enviar imagem</button>
+          </div>
+          <p class="dica">Formato deitado, ideal 800 × 500 pixels. <span id="status-img"></span></p>
+          <img id="previa" alt="" style="margin-top:12px;max-width:260px;border-radius:11px" class="oculto">
+        </div>
+
+        <div class="campo">
+          <label for="f-alt">Descrição da imagem</label>
+          <input type="text" id="f-alt" maxlength="200">
+          <p class="dica">Para quem usa leitor de tela. Ex.: “Emanuela no consultório com um manual de teste”.</p>
+        </div>
+
+        <div class="campo">
+          <label for="f-corpo">Texto do artigo</label>
+          <textarea id="f-corpo" class="corpo"></textarea>
+          <p class="dica">
+            <code>## </code> faz subtítulo · <code>- </code> faz lista ·
+            <code>**palavra**</code> deixa em negrito · linha em branco separa parágrafos.
+          </p>
+        </div>
+
+        <div style="display:flex;gap:12px;flex-wrap:wrap;padding-top:6px;border-top:1px solid var(--salvia-clara)">
+          <button class="btn btn-p" id="btn-salvar" type="submit">Salvar</button>
+          <button class="btn btn-x" id="btn-apagar" type="button">Apagar postagem</button>
+        </div>
+      </form>
+    </section>
   </div>
 </div>
 
-<!-- login (Netlify Identity) -->
-<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-<!-- editor (Decap CMS) -->
-<script src="https://unpkg.com/decap-cms@^3.1.10/dist/decap-cms.js"></script>
+<script type="module">
+/* ═══════════════════════════════════════════════════════════════
+   CONFIG — cole aqui os dois valores de Project Settings → API.
+   A chave anon é pública por natureza: quem protege o banco são
+   as regras (RLS) criadas pelo supabase/schema.sql.
+   ═══════════════════════════════════════════════════════════════ */
+const CONFIG = {
+  url:  'https://yzxoyxzmteqvmayqtdly.supabase.co',
+  anon: ''    // a chave marcada como "anon" / "public"
+};
 
-<script>
-(function () {
-  var espera = document.getElementById('espera');
-  var ajuda  = document.getElementById('ajuda');
-  var diag   = document.getElementById('diag-identity');
+const $ = (id) => document.getElementById(id);
+const mostrar = (id) => $(id).classList.remove('oculto');
+const esconder = (id) => $(id).classList.add('oculto');
 
-  /* O Identity só responde neste endereço quando está ativado no Netlify.
-     É o teste mais direto de que o painel vai conseguir ou não fazer login. */
-  fetch('/.netlify/identity/settings', { cache: 'no-store' })
-    .then(function (r) {
-      if (r.ok) {
-        /* tudo certo: sai da frente e deixa o Decap trabalhar */
-        diag.innerHTML = '<b>Serviço de login: ativo.</b>';
-        setTimeout(function () { espera.hidden = true; espera.style.display = 'none'; }, 800);
-        return;
-      }
-      mostrarAjuda('<b>Serviço de login: não ativado</b> (o endereço /.netlify/identity respondeu ' + r.status + ').');
-    })
-    .catch(function () {
-      mostrarAjuda('<b>Serviço de login: não foi possível verificar.</b> Confira a conexão.');
-    });
+if (!CONFIG.url || !CONFIG.anon) {
+  mostrar('tela-config');
+} else {
+  const { createClient } = await import('https://esm.sh/@supabase/supabase-js@2');
+  const sb = createClient(CONFIG.url, CONFIG.anon);
 
-  function mostrarAjuda(texto) {
-    diag.innerHTML = texto;
-    espera.hidden = true;
-    espera.style.display = 'none';
-    ajuda.hidden = false;
+  let posts = [];
+  let editando = null;   // null = criando
+
+  /* ---------- avisos ---------- */
+  let sumir;
+  function avisar(texto, ruim) {
+    const el = $('recado');
+    el.textContent = texto;
+    el.className = 'recado ' + (ruim ? 'ruim' : 'ok');
+    clearTimeout(sumir);
+    sumir = setTimeout(() => el.classList.add('oculto'), 4500);
   }
-})();
+
+  /* ---------- login ---------- */
+  $('form-login').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = $('btn-entrar');
+    btn.disabled = true; btn.textContent = 'Entrando…';
+    const { error } = await sb.auth.signInWithPassword({
+      email: $('login-email').value.trim(),
+      password: $('login-senha').value
+    });
+    btn.disabled = false; btn.textContent = 'Entrar';
+    if (error) {
+      const el = $('erro-login');
+      el.textContent = error.message === 'Invalid login credentials'
+        ? 'E-mail ou senha não conferem.' : error.message;
+      el.classList.remove('oculto');
+    }
+  });
+
+  $('btn-sair').addEventListener('click', () => sb.auth.signOut());
+
+  sb.auth.onAuthStateChange((_evento, sessao) => {
+    if (sessao) {
+      esconder('tela-login'); mostrar('tela-painel');
+      $('quem').textContent = sessao.user.email;
+      carregar();
+    } else {
+      esconder('tela-painel'); mostrar('tela-login');
+    }
+  });
+
+  const { data: { session } } = await sb.auth.getSession();
+  if (!session) mostrar('tela-login');
+
+  /* ---------- listar ---------- */
+  async function carregar() {
+    const { data, error } = await sb.from('posts')
+      .select('*').order('ordem').order('criado_em', { ascending: false });
+    if (error) return avisar('Não consegui carregar: ' + error.message, true);
+    posts = data || [];
+    desenhar();
+  }
+
+  function desenhar() {
+    const lista = $('lista');
+    if (!posts.length) {
+      lista.innerHTML = '<div class="vazio"><p>Nenhuma postagem ainda.</p>'
+        + '<p style="font-size:.85rem">Clique em “Nova postagem” para escrever a primeira.</p></div>';
+      return;
+    }
+    lista.innerHTML = '';
+    posts.forEach((p, i) => {
+      const div = document.createElement('div');
+      div.className = 'post';
+      div.innerHTML = `
+        <img src="${escapar(p.imagem || '')}" alt="" onerror="this.style.visibility='hidden'">
+        <div class="post-txt">
+          <span class="tag${p.publicado ? '' : ' rascunho'}">${escapar(p.publicado ? p.categoria : 'Rascunho')}</span>
+          <h3>${escapar(p.titulo)}</h3>
+          <p>${escapar(p.resumo || '')}</p>
+        </div>
+        <div class="post-acoes">
+          <button class="btn btn-s btn-min" data-editar="${p.id}" type="button">Editar</button>
+          <div class="ordem">
+            <button data-subir="${p.id}" ${i === 0 ? 'disabled' : ''} title="Subir" type="button">↑</button>
+            <button data-descer="${p.id}" ${i === posts.length - 1 ? 'disabled' : ''} title="Descer" type="button">↓</button>
+          </div>
+        </div>`;
+      lista.appendChild(div);
+    });
+  }
+
+  function escapar(t) {
+    return String(t ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;')
+      .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  $('lista').addEventListener('click', async (e) => {
+    const b = e.target.closest('button'); if (!b) return;
+    if (b.dataset.editar) return abrirEditor(posts.find(p => p.id === b.dataset.editar));
+    if (b.dataset.subir)  return trocarOrdem(b.dataset.subir, -1);
+    if (b.dataset.descer) return trocarOrdem(b.dataset.descer, +1);
+  });
+
+  async function trocarOrdem(id, passo) {
+    const i = posts.findIndex(p => p.id === id);
+    const j = i + passo;
+    if (j < 0 || j >= posts.length) return;
+    const a = posts[i], b = posts[j];
+    const [ra, rb] = await Promise.all([
+      sb.from('posts').update({ ordem: b.ordem }).eq('id', a.id),
+      sb.from('posts').update({ ordem: a.ordem }).eq('id', b.id)
+    ]);
+    if (ra.error || rb.error) return avisar('Não consegui reordenar.', true);
+    await carregar();
+  }
+
+  /* ---------- editor ---------- */
+  $('btn-nova').addEventListener('click', () => abrirEditor(null));
+  $('btn-voltar').addEventListener('click', fecharEditor);
+
+  function abrirEditor(post) {
+    editando = post || null;
+    $('titulo-editor').textContent = post ? 'Editar postagem' : 'Nova postagem';
+    $('f-titulo').value    = post?.titulo    || '';
+    $('f-categoria').value = post?.categoria || 'Avaliação';
+    $('f-publicado').value = String(post ? post.publicado : true);
+    $('f-resumo').value    = post?.resumo    || '';
+    $('f-imagem').value    = post?.imagem    || '';
+    $('f-alt').value       = post?.imagem_alt|| '';
+    $('f-corpo').value     = post?.corpo     || '';
+    $('btn-apagar').classList.toggle('oculto', !post);
+    atualizarPrevia();
+    esconder('secao-lista'); mostrar('secao-editor');
+    window.scrollTo(0, 0);
+  }
+
+  function fecharEditor() {
+    esconder('secao-editor'); mostrar('secao-lista');
+    window.scrollTo(0, 0);
+  }
+
+  $('f-imagem').addEventListener('input', atualizarPrevia);
+  function atualizarPrevia() {
+    const src = $('f-imagem').value.trim();
+    const img = $('previa');
+    if (!src) return img.classList.add('oculto');
+    img.src = src.startsWith('http') ? src : '../' + src;
+    img.classList.remove('oculto');
+  }
+
+  /* ---------- upload da capa ---------- */
+  $('btn-enviar-img').addEventListener('click', () => $('f-arquivo').click());
+  $('f-arquivo').addEventListener('change', async () => {
+    const arq = $('f-arquivo').files[0];
+    if (!arq) return;
+    if (arq.size > 3 * 1024 * 1024) {
+      return avisar('Imagem muito grande. O limite é 3 MB.', true);
+    }
+    $('status-img').textContent = 'Enviando…';
+    const nome = Date.now() + '-' + arq.name.toLowerCase().replace(/[^a-z0-9.]+/g, '-');
+    const { error } = await sb.storage.from('blog').upload(nome, arq, { upsert: false });
+    if (error) { $('status-img').textContent = ''; return avisar('Falhou o envio: ' + error.message, true); }
+    const { data } = sb.storage.from('blog').getPublicUrl(nome);
+    $('f-imagem').value = data.publicUrl;
+    $('status-img').textContent = 'Enviada.';
+    atualizarPrevia();
+  });
+
+  /* ---------- salvar e apagar ---------- */
+  $('form-post').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = $('btn-salvar');
+    btn.disabled = true; btn.textContent = 'Salvando…';
+
+    const dados = {
+      titulo:     $('f-titulo').value.trim(),
+      categoria:  $('f-categoria').value,
+      publicado:  $('f-publicado').value === 'true',
+      resumo:     $('f-resumo').value.trim(),
+      imagem:     $('f-imagem').value.trim() || null,
+      imagem_alt: $('f-alt').value.trim() || null,
+      corpo:      $('f-corpo').value
+    };
+
+    const r = editando
+      ? await sb.from('posts').update(dados).eq('id', editando.id)
+      : await sb.from('posts').insert({ ...dados, ordem: (posts.at(-1)?.ordem ?? 0) + 1 });
+
+    btn.disabled = false; btn.textContent = 'Salvar';
+    if (r.error) return avisar('Não consegui salvar: ' + r.error.message, true);
+
+    avisar(editando ? 'Postagem atualizada.' : 'Postagem criada.');
+    await carregar();
+    fecharEditor();
+  });
+
+  $('btn-apagar').addEventListener('click', async () => {
+    if (!editando) return;
+    if (!confirm('Apagar “' + editando.titulo + '”? Isso não tem volta.')) return;
+    const { error } = await sb.from('posts').delete().eq('id', editando.id);
+    if (error) return avisar('Não consegui apagar: ' + error.message, true);
+    avisar('Postagem apagada.');
+    await carregar();
+    fecharEditor();
+  });
+}
 </script>
 </body>
 </html>
