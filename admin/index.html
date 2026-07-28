@@ -119,6 +119,18 @@ ol.passos li{margin-bottom:9px}
 .salvo.ver{opacity:1}
 .mini{display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap}
 .mini img{width:120px;border-radius:9px;border:1px solid var(--salvia-clara)}
+
+/* ── agenda ── */
+@media(min-width:640px){.linha-3{grid-template-columns:repeat(3,1fr)}}
+.resumo{display:grid;gap:10px;grid-template-columns:repeat(2,1fr)}
+@media(min-width:720px){.resumo{grid-template-columns:repeat(4,1fr)}}
+.numero{background:var(--branco);border:1px solid var(--salvia-clara);border-radius:14px;padding:16px 18px}
+.numero b{display:block;font-family:var(--serif);font-weight:400;font-size:1.5rem;line-height:1.1}
+.numero span{display:block;font-size:.72rem;color:#7A8A78;margin-top:4px}
+.compromisso{display:flex;gap:16px;align-items:flex-start}
+.hora{flex:none;width:66px;font-family:var(--serif);font-size:1.25rem;line-height:1.1;color:var(--salvia-esc)}
+.hora span{display:block;font-family:var(--sans);font-size:.66rem;color:#9AA898;margin-top:3px}
+.tag.feito{background:#E7F0E4;color:#3E6B37}
 </style>
 </head>
 <body>
@@ -191,6 +203,7 @@ ol.passos li{margin-bottom:9px}
       <button class="aba"       data-aba="conteudo" type="button">Textos e imagens</button>
       <button class="aba"       data-aba="areas"    type="button">Áreas de atuação</button>
       <button class="aba"       data-aba="faq"      type="button">Dúvidas</button>
+      <button class="aba"       data-aba="agenda"   type="button">Agenda</button>
     </nav>
 
     <!-- lista -->
@@ -310,6 +323,117 @@ ol.passos li{margin-bottom:9px}
       </div>
       <div id="lista-faq"></div>
     </section>
+
+    <!-- ═════ agenda ═════ -->
+    <section id="secao-agenda" class="oculto">
+      <div style="display:flex;align-items:center;gap:14px;margin-bottom:8px">
+        <h2 style="font-size:1.5rem;margin-right:auto">Agenda</h2>
+        <button class="btn btn-p" id="btn-novo-atend" type="button">+ Novo atendimento</button>
+      </div>
+      <p class="dica" style="margin-bottom:20px">
+        Só você enxerga esta aba. Estes dados nunca aparecem no site — a tabela é fechada
+        para quem não está logada. Registre apenas o necessário.
+      </p>
+
+      <div class="resumo" id="resumo-agenda"></div>
+
+      <div class="abas" id="filtros-agenda" style="margin:22px 0 20px">
+        <button class="aba ativa" data-filtro="proximos" type="button">Próximos</button>
+        <button class="aba"       data-filtro="hoje"     type="button">Hoje</button>
+        <button class="aba"       data-filtro="mes"      type="button">Este mês</button>
+        <button class="aba"       data-filtro="todos"    type="button">Todos</button>
+      </div>
+
+      <div id="lista-agenda"></div>
+    </section>
+
+    <!-- ═════ formulário da agenda ═════ -->
+    <section id="secao-agenda-editor" class="oculto">
+      <div style="display:flex;align-items:center;gap:14px;margin-bottom:22px">
+        <h2 style="font-size:1.5rem;margin-right:auto" id="titulo-ag">Novo atendimento</h2>
+        <button class="btn btn-s" id="btn-ag-voltar" type="button">Cancelar</button>
+      </div>
+
+      <form class="cartao" id="form-agenda">
+        <div class="linha linha-2">
+          <div class="campo">
+            <label for="ag-paciente">Paciente</label>
+            <input type="text" id="ag-paciente" required maxlength="120">
+          </div>
+          <div class="campo">
+            <label for="ag-responsavel">Responsável (se criança ou adolescente)</label>
+            <input type="text" id="ag-responsavel" maxlength="120">
+          </div>
+        </div>
+
+        <div class="campo">
+          <label for="ag-contato">Telefone ou WhatsApp</label>
+          <input type="text" id="ag-contato" maxlength="30" placeholder="74 98124-9127">
+          <p class="dica">Vira um botão de WhatsApp na lista, para confirmar o horário.</p>
+        </div>
+
+        <div class="linha linha-3">
+          <div class="campo">
+            <label for="ag-data">Data</label>
+            <input type="date" id="ag-data" required>
+          </div>
+          <div class="campo">
+            <label for="ag-hora">Hora</label>
+            <input type="time" id="ag-hora" required>
+          </div>
+          <div class="campo">
+            <label for="ag-duracao">Duração (min)</label>
+            <input type="number" id="ag-duracao" min="10" max="480" step="5" value="50">
+          </div>
+        </div>
+
+        <div class="linha linha-3">
+          <div class="campo">
+            <label for="ag-tipo">Tipo</label>
+            <select id="ag-tipo">
+              <option>Pré-consulta</option><option>Sessão</option><option>Avaliação</option>
+              <option>Devolutiva</option><option>Reabilitação</option><option>Outro</option>
+            </select>
+          </div>
+          <div class="campo">
+            <label for="ag-formato">Formato</label>
+            <select id="ag-formato"><option>Presencial</option><option>Vídeo</option></select>
+          </div>
+          <div class="campo">
+            <label for="ag-situacao">Situação</label>
+            <select id="ag-situacao">
+              <option>Marcado</option><option>Realizado</option>
+              <option>Faltou</option><option>Cancelado</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="linha linha-2">
+          <div class="campo">
+            <label for="ag-valor">Valor (R$)</label>
+            <input type="number" id="ag-valor" min="0" step="0.01" placeholder="opcional">
+          </div>
+          <div class="campo">
+            <label for="ag-pago">Pagamento</label>
+            <select id="ag-pago"><option value="false">A receber</option><option value="true">Pago</option></select>
+          </div>
+        </div>
+
+        <div class="campo">
+          <label for="ag-obs">Observações</label>
+          <textarea id="ag-obs" style="min-height:80px"></textarea>
+          <p class="dica">
+            Anote só o operacional — horário, material, combinações. Evite conteúdo clínico
+            detalhado aqui; isso pertence ao prontuário.
+          </p>
+        </div>
+
+        <div style="display:flex;gap:12px;flex-wrap:wrap;padding-top:6px;border-top:1px solid var(--salvia-clara)">
+          <button class="btn btn-p" type="submit">Salvar</button>
+          <button class="btn btn-x oculto" id="btn-ag-apagar" type="button">Apagar atendimento</button>
+        </div>
+      </form>
+    </section>
   </div>
 </div>
 
@@ -381,7 +505,7 @@ if (!CONFIG.url || !CONFIG.anon) {
   if (!session) mostrar('tela-login');
 
   /* ═══════════ abas ═══════════ */
-  const SECOES = { posts:'secao-lista', conteudo:'secao-conteudo', areas:'secao-areas', faq:'secao-faq' };
+  const SECOES = { posts:'secao-lista', conteudo:'secao-conteudo', areas:'secao-areas', faq:'secao-faq', agenda:'secao-agenda' };
   let abaAtual = 'posts';
 
   $('abas').addEventListener('click', (e) => {
@@ -393,6 +517,8 @@ if (!CONFIG.url || !CONFIG.anon) {
     if (abaAtual === 'conteudo') carregarConteudo();
     if (abaAtual === 'areas')    carregarAreas();
     if (abaAtual === 'faq')      carregarFaq();
+    if (abaAtual === 'agenda')   carregarAgenda();
+    esconder('secao-agenda-editor');
     window.scrollTo(0, 0);
   });
 
@@ -594,6 +720,181 @@ if (!CONFIG.url || !CONFIG.anon) {
     if (error) return avisar(faltaTabela(error, 'faq'), true);
     avisar('Dúvida criada como oculta. Edite e depois mostre no site.');
     carregarFaq();
+  });
+
+  /* ═══════════ agenda interna ═══════════ */
+  const TIPOS    = ['Pré-consulta','Sessão','Avaliação','Devolutiva','Reabilitação','Outro'];
+  const FORMATOS = ['Presencial','Vídeo'];
+  const SITUACOES= ['Marcado','Realizado','Faltou','Cancelado'];
+  let compromissos = [];
+  let filtroAgenda = 'proximos';
+
+  const hojeISO = () => new Date().toISOString().slice(0, 10);
+
+  function dataBonita(iso) {
+    const [a, m, d] = iso.split('-');
+    const dias = ['domingo','segunda','terça','quarta','quinta','sexta','sábado'];
+    const dt = new Date(Number(a), Number(m) - 1, Number(d));
+    return d + '/' + m + ' · ' + dias[dt.getDay()];
+  }
+
+  const dinheiro = (v) => v == null ? '—' :
+    Number(v).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+
+  async function carregarAgenda() {
+    const { data, error } = await sb.from('agenda').select('*').order('data').order('hora');
+    if (error) return avisar(faltaTabela(error, 'agenda'), true);
+    compromissos = data || [];
+    desenharAgenda();
+  }
+
+  function desenharAgenda() {
+    const hoje = hojeISO();
+    let lista = compromissos;
+    if (filtroAgenda === 'proximos') lista = lista.filter(c => c.data >= hoje && c.situacao === 'Marcado');
+    if (filtroAgenda === 'hoje')     lista = lista.filter(c => c.data === hoje);
+    if (filtroAgenda === 'mes')      lista = lista.filter(c => c.data.slice(0, 7) === hoje.slice(0, 7));
+
+    /* resumo do mês corrente */
+    const doMes     = compromissos.filter(c => c.data.slice(0, 7) === hoje.slice(0, 7));
+    const realizados= doMes.filter(c => c.situacao === 'Realizado');
+    const recebido  = realizados.filter(c => c.pago).reduce((s, c) => s + Number(c.valor || 0), 0);
+    const aReceber  = realizados.filter(c => !c.pago).reduce((s, c) => s + Number(c.valor || 0), 0);
+
+    $('resumo-agenda').innerHTML =
+        '<div class="numero"><b>' + doMes.length + '</b><span>marcados no mês</span></div>'
+      + '<div class="numero"><b>' + realizados.length + '</b><span>realizados</span></div>'
+      + '<div class="numero"><b>' + dinheiro(recebido) + '</b><span>recebido</span></div>'
+      + '<div class="numero"><b>' + dinheiro(aReceber) + '</b><span>a receber</span></div>';
+
+    if (!lista.length) {
+      $('lista-agenda').innerHTML = '<div class="vazio"><p>Nada por aqui.</p>'
+        + '<p style="font-size:.85rem">Use “+ Novo atendimento” para marcar o primeiro.</p></div>';
+      return;
+    }
+
+    /* agrupa por dia */
+    const dias = {};
+    lista.forEach(c => { (dias[c.data] = dias[c.data] || []).push(c); });
+
+    $('lista-agenda').innerHTML = Object.entries(dias).map(([dia, itens]) =>
+      '<div class="grupo"><h3>' + dataBonita(dia) + (dia === hoje ? ' — hoje' : '') + '</h3>'
+      + itens.map(linhaAgenda).join('') + '</div>'
+    ).join('');
+  }
+
+  function linhaAgenda(c) {
+    const cor = { 'Marcado':'', 'Realizado':' feito', 'Faltou':' rascunho', 'Cancelado':' rascunho' }[c.situacao] || '';
+    const zap = c.contato ? c.contato.replace(/\D/g, '') : '';
+    return '<div class="ficha compromisso">'
+      + '<div class="hora">' + c.hora.slice(0, 5) + '<span>' + c.duracao + " min</span></div>"
+      + '<div style="flex:1;min-width:0">'
+      +   '<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:4px">'
+      +     '<span class="tag' + cor + '">' + escapar(c.situacao) + '</span>'
+      +     '<span class="tag">' + escapar(c.tipo) + '</span>'
+      +     '<span class="tag">' + escapar(c.formato) + '</span>'
+      +     (c.valor != null ? '<span class="tag' + (c.pago ? ' feito' : '') + '">'
+             + dinheiro(c.valor) + (c.pago ? ' · pago' : ' · a receber') + '</span>' : '')
+      +   '</div>'
+      +   '<h3 style="font-size:1.05rem">' + escapar(c.paciente) + '</h3>'
+      +   (c.responsavel ? '<p class="dica" style="margin:2px 0 0">Responsável: ' + escapar(c.responsavel) + '</p>' : '')
+      +   (c.observacoes ? '<p class="dica" style="margin:6px 0 0">' + escapar(c.observacoes) + '</p>' : '')
+      + '</div>'
+      + '<div class="post-acoes">'
+      +   (zap ? '<a class="btn btn-s btn-min" href="https://wa.me/' + (zap.length > 11 ? zap : '55' + zap)
+             + '" target="_blank" rel="noopener">WhatsApp</a>' : '')
+      +   '<button class="btn btn-s btn-min" data-ag-editar="' + c.id + '" type="button">Editar</button>'
+      +   (c.situacao === 'Marcado'
+            ? '<button class="btn btn-p btn-min" data-ag-feito="' + c.id + '" type="button">Realizado</button>' : '')
+      +   (c.situacao === 'Realizado' && !c.pago
+            ? '<button class="btn btn-p btn-min" data-ag-pago="' + c.id + '" type="button">Marcar pago</button>' : '')
+      + '</div></div>';
+  }
+
+  /* ---------- formulário ---------- */
+  function abrirAgendaEditor(c) {
+    agEditando = c || null;
+    $('titulo-ag').textContent = c ? 'Editar atendimento' : 'Novo atendimento';
+    $('ag-paciente').value    = c?.paciente    || '';
+    $('ag-responsavel').value = c?.responsavel || '';
+    $('ag-contato').value     = c?.contato     || '';
+    $('ag-data').value        = c?.data        || hojeISO();
+    $('ag-hora').value        = (c?.hora || '08:00').slice(0, 5);
+    $('ag-duracao').value     = c?.duracao     ?? 50;
+    $('ag-tipo').value        = c?.tipo        || 'Sessão';
+    $('ag-formato').value     = c?.formato     || 'Presencial';
+    $('ag-situacao').value    = c?.situacao    || 'Marcado';
+    $('ag-valor').value       = c?.valor       ?? '';
+    $('ag-pago').value        = String(c ? c.pago : false);
+    $('ag-obs').value         = c?.observacoes || '';
+    $('btn-ag-apagar').classList.toggle('oculto', !c);
+    esconder('secao-agenda'); mostrar('secao-agenda-editor');
+    window.scrollTo(0, 0);
+  }
+
+  let agEditando = null;
+
+  $('btn-novo-atend').addEventListener('click', () => abrirAgendaEditor(null));
+  $('btn-ag-voltar').addEventListener('click', () => {
+    esconder('secao-agenda-editor'); mostrar('secao-agenda'); window.scrollTo(0, 0);
+  });
+
+  $('filtros-agenda').addEventListener('click', (e) => {
+    const b = e.target.closest('button'); if (!b) return;
+    filtroAgenda = b.dataset.filtro;
+    document.querySelectorAll('#filtros-agenda button').forEach(x => x.classList.toggle('ativa', x === b));
+    desenharAgenda();
+  });
+
+  $('form-agenda').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const dados = {
+      paciente:    $('ag-paciente').value.trim(),
+      responsavel: $('ag-responsavel').value.trim() || null,
+      contato:     $('ag-contato').value.trim() || null,
+      data:        $('ag-data').value,
+      hora:        $('ag-hora').value,
+      duracao:     Number($('ag-duracao').value) || 50,
+      tipo:        $('ag-tipo').value,
+      formato:     $('ag-formato').value,
+      situacao:    $('ag-situacao').value,
+      valor:       $('ag-valor').value === '' ? null : Number($('ag-valor').value),
+      pago:        $('ag-pago').value === 'true',
+      observacoes: $('ag-obs').value.trim() || null
+    };
+    const r = agEditando
+      ? await sb.from('agenda').update(dados).eq('id', agEditando.id)
+      : await sb.from('agenda').insert(dados);
+    if (r.error) return avisar('Não consegui salvar: ' + r.error.message, true);
+    avisar(agEditando ? 'Atendimento atualizado.' : 'Atendimento marcado.');
+    await carregarAgenda();
+    esconder('secao-agenda-editor'); mostrar('secao-agenda'); window.scrollTo(0, 0);
+  });
+
+  $('btn-ag-apagar').addEventListener('click', async () => {
+    if (!agEditando) return;
+    if (!confirm('Apagar o atendimento de ' + agEditando.paciente + '? Isso não tem volta.')) return;
+    const { error } = await sb.from('agenda').delete().eq('id', agEditando.id);
+    if (error) return avisar('Não consegui apagar: ' + error.message, true);
+    avisar('Atendimento apagado.');
+    await carregarAgenda();
+    esconder('secao-agenda-editor'); mostrar('secao-agenda');
+  });
+
+  /* atalhos da lista */
+  document.addEventListener('click', async (e) => {
+    const b = e.target.closest('button'); if (!b) return;
+    if (b.dataset.agEditar) {
+      return abrirAgendaEditor(compromissos.find(c => c.id === b.dataset.agEditar));
+    }
+    if (b.dataset.agFeito) {
+      await sb.from('agenda').update({ situacao: 'Realizado' }).eq('id', b.dataset.agFeito);
+      avisar('Marcado como realizado.'); return carregarAgenda();
+    }
+    if (b.dataset.agPago) {
+      await sb.from('agenda').update({ pago: true }).eq('id', b.dataset.agPago);
+      avisar('Marcado como pago.'); return carregarAgenda();
+    }
   });
 
   /* ---------- listar ---------- */
