@@ -483,8 +483,19 @@ if (!CONFIG.url || !CONFIG.anon) {
     btn.disabled = false; btn.textContent = 'Entrar';
     if (error) {
       const el = $('erro-login');
-      el.textContent = error.message === 'Invalid login credentials'
-        ? 'E-mail ou senha não conferem.' : error.message;
+      const cod = error.code || '';
+      let texto;
+      if (cod === 'email_not_confirmed' || /not confirmed/i.test(error.message)) {
+        texto = 'A conta existe, mas o e-mail ainda não foi confirmado. '
+              + 'Procure a mensagem do Supabase na caixa de entrada (e no spam), '
+              + 'ou peça para confirmarem a conta no painel do Supabase.';
+      } else if (cod === 'invalid_credentials' || error.message === 'Invalid login credentials') {
+        texto = 'E-mail ou senha não conferem — ou a conta ainda não foi criada. '
+              + 'Confira em Authentication → Users se este e-mail aparece na lista.';
+      } else {
+        texto = error.message;
+      }
+      el.textContent = texto;
       el.classList.remove('oculto');
     }
   });
