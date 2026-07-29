@@ -30,7 +30,7 @@
 
 
 -- ═══════════════════════════════════════════════════════════════
---  BLOCO 1 de 4 — schema.sql
+--  BLOCO 1 de 5 — schema.sql
 -- ═══════════════════════════════════════════════════════════════
 
 -- ─────────────── 1. tabela das postagens ───────────────
@@ -193,7 +193,7 @@ where not exists (select 1 from public.posts);
 
 
 -- ═══════════════════════════════════════════════════════════════
---  BLOCO 2 de 4 — schema-2-conteudo.sql
+--  BLOCO 2 de 5 — schema-2-conteudo.sql
 -- ═══════════════════════════════════════════════════════════════
 
 -- ─────────────── regras de acesso, iguais para as três ───────────────
@@ -440,7 +440,7 @@ on conflict (chave) do nothing;
 
 
 -- ═══════════════════════════════════════════════════════════════
---  BLOCO 3 de 4 — schema-3-agenda.sql
+--  BLOCO 3 de 5 — schema-3-agenda.sql
 -- ═══════════════════════════════════════════════════════════════
 
 create table if not exists public.agenda (
@@ -529,7 +529,7 @@ revoke all on public.agenda from anon;
 
 
 -- ═══════════════════════════════════════════════════════════════
---  BLOCO 4 de 4 — schema-4-resto.sql
+--  BLOCO 4 de 5 — schema-4-resto.sql
 -- ═══════════════════════════════════════════════════════════════
 
 insert into public.conteudo (chave, valor, tipo, grupo, rotulo, dica, ordem) values
@@ -597,6 +597,129 @@ insert into public.conteudo (chave, valor, tipo, grupo, rotulo, dica, ordem) val
 ('contato.meet', 'https://meet.google.com/', 'link', 'Topo', 'Botão do Google Meet',
  'Por padrão abre o Meet, para ela iniciar a chamada com a conta Google. Se tiver uma sala fixa, cole o endereço dela aqui.', 6)
 on conflict (chave) do nothing;
+
+
+
+
+-- ═══════════════════════════════════════════════════════════════
+--  BLOCO 5 de 5 — correção de segurança (sessão anônima)
+-- ═══════════════════════════════════════════════════════════════
+
+-- ─────────────── quem é de verdade a dona do painel ───────────────
+
+create or replace function public.eh_a_dona()
+returns boolean
+language sql stable
+as $$
+  select
+    auth.role() = 'authenticated'
+    and coalesce((auth.jwt() ->> 'is_anonymous')::boolean, false) = false;
+$$;
+
+comment on function public.eh_a_dona is
+  'Verdadeiro só para sessão iniciada com e-mail e senha. Sessão anônima retorna falso.';
+
+
+-- ─────────────── reaplica as regras nas tabelas públicas ───────────────
+--  Leitura continua liberada. Escrita agora exige sessão de verdade.
+
+create or replace function public.aplicar_regras(nome text)
+returns void language plpgsql as $$
+begin
+  execute format('alter table public.%I enable row level security', nome);
+
+  execute format('drop policy if exists "todos leem" on public.%I', nome);
+  execute format('create policy "todos leem" on public.%I for select to anon, authenticated using (true)', nome);
+
+  execute format('drop policy if exists "logada insere" on public.%I', nome);
+  execute format('create policy "logada insere" on public.%I for insert to authenticated with check (public.eh_a_dona())', nome);
+
+  execute format('drop policy if exists "logada edita" on public.%I', nome);
+  execute format('create policy "logada edita" on public.%I for update to authenticated using (public.eh_a_dona()) with check (public.eh_a_dona())', nome);
+
+  execute format('drop policy if exists "logada apaga" on public.%I', nome);
+  execute format('create policy "logada apaga" on public.%I for delete to authenticated using (public.eh_a_dona())', nome);
+end;
+$$;
+
+select public.aplicar_regras('conteudo');
+select public.aplicar_regras('areas');
+select public.aplicar_regras('faq');
+
+
+-- ─────────────── postagens ───────────────
+
+drop policy if exists "logada escreve" on public.posts;
+create policy "logada escreve" on public.posts
+  for insert to authenticated with check (public.eh_a_dona());
+
+drop policy if exists "logada edita" on public.posts;
+create policy "logada edita" on public.posts
+  for update to authenticated using (public.eh_a_dona()) with check (public.eh_a_dona());
+
+drop policy if exists "logada apaga" on public.posts;
+create policy "logada apaga" on public.posts
+  for delete to authenticated using (public.eh_a_dona());
+
+
+-- ─────────────── agenda: o caso mais grave ───────────────
+--  Aqui a LEITURA também passa a exigir sessão de verdade.
+
+drop policy if exists "agenda: so logada le"     on public.agenda;
+drop policy if exists "agenda: so logada insere" on public.agenda;
+drop policy if exists "agenda: so logada edita"  on public.agenda;
+drop policy if exists "agenda: so logada apaga"  on public.agenda;
+
+create policy "agenda: so a dona le"
+  on public.agenda for select to authenticated using (public.eh_a_dona());
+
+create policy "agenda: so a dona insere"
+  on public.agenda for insert to authenticated with check (public.eh_a_dona());
+
+create policy "agenda: so a dona edita"
+  on public.agenda for update to authenticated
+  using (public.eh_a_dona()) with check (public.eh_a_dona());
+
+create policy "agenda: so a dona apaga"
+  on public.agenda for delete to authenticated using (public.eh_a_dona());
+
+
+-- ─────────────── imagens ───────────────
+
+drop policy if exists "logada envia capa"          on storage.objects;
+drop policy if exists "logada troca capa"          on storage.objects;
+drop policy if exists "logada remove capa"         on storage.objects;
+drop policy if exists "logada envia imagem do site" on storage.objects;
+drop policy if exists "logada troca imagem do site" on storage.objects;
+drop policy if exists "logada remove imagem do site" on storage.objects;
+
+create policy "a dona envia imagem"
+  on storage.objects for insert to authenticated
+  with check (bucket_id in ('blog','site') and public.eh_a_dona());
+
+create policy "a dona troca imagem"
+  on storage.objects for update to authenticated
+  using (bucket_id in ('blog','site') and public.eh_a_dona());
+
+create policy "a dona remove imagem"
+  on storage.objects for delete to authenticated
+  using (bucket_id in ('blog','site') and public.eh_a_dona());
+
+
+-- ═══════════════════════════════════════════════════════════════════════
+--  DEPOIS DE RODAR, faça os dois ajustes no painel do Supabase:
+--
+--   1) Authentication → Sign In / Providers
+--      • DESLIGUE "Allow new users to sign up"
+--      • DESLIGUE "Allow anonymous sign-ins"
+--
+--      O SQL acima já protege o banco mesmo se ficarem ligados, mas
+--      desligar remove o problema pela raiz.
+--
+--   2) Confira que a conta da Emanuela continua entrando no painel.
+--      Ela entra com e-mail e senha, então passa por eh_a_dona() sem
+--      problema. Se por acaso não entrar, me avise.
+-- ═══════════════════════════════════════════════════════════════════════
 
 
 -- ═══════════════════════════════════════════════════════════════════════
