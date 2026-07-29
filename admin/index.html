@@ -131,6 +131,15 @@ ol.passos li{margin-bottom:9px}
 .hora{flex:none;width:66px;font-family:var(--serif);font-size:1.25rem;line-height:1.1;color:var(--salvia-esc)}
 .hora span{display:block;font-family:var(--sans);font-size:.66rem;color:#9AA898;margin-top:3px}
 .tag.feito{background:#E7F0E4;color:#3E6B37}
+
+/* ── galeria ── */
+.galeria{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(180px,1fr))}
+.foto{margin:0;background:var(--branco);border:1px solid var(--salvia-clara);border-radius:14px;overflow:hidden}
+.foto img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;background:var(--salvia-50)}
+.foto figcaption{padding:10px 12px 6px;font-size:.72rem;color:#7A8A78;display:flex;gap:8px}
+.foto figcaption span:first-child{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.foto .peso{flex:none}
+.foto-acoes{display:flex;gap:6px;padding:0 10px 12px;flex-wrap:wrap}
 </style>
 </head>
 <body>
@@ -203,6 +212,7 @@ ol.passos li{margin-bottom:9px}
       <button class="aba"       data-aba="conteudo" type="button">Textos e imagens</button>
       <button class="aba"       data-aba="areas"    type="button">Áreas de atuação</button>
       <button class="aba"       data-aba="faq"      type="button">Dúvidas</button>
+      <button class="aba"       data-aba="galeria"  type="button">Imagens</button>
       <button class="aba"       data-aba="agenda"   type="button">Agenda</button>
     </nav>
 
@@ -322,6 +332,21 @@ ol.passos li{margin-bottom:9px}
         <button class="btn btn-p" id="btn-nova-duvida" type="button">+ Nova dúvida</button>
       </div>
       <div id="lista-faq"></div>
+    </section>
+
+    <!-- ═════ galeria de imagens ═════ -->
+    <section id="secao-galeria" class="oculto">
+      <div style="display:flex;align-items:center;gap:14px;margin-bottom:8px">
+        <h2 style="font-size:1.5rem;margin-right:auto">Imagens</h2>
+        <input type="file" id="arquivos-galeria" accept="image/*" multiple class="oculto">
+        <button class="btn btn-p" id="btn-enviar-imgs" type="button">+ Enviar imagens</button>
+      </div>
+      <p class="dica" style="margin-bottom:22px">
+        Envie, troque ou apague qualquer imagem do site. Para usar uma delas, clique em
+        <b>Copiar endereço</b> e cole no campo correspondente, na aba <b>Textos e imagens</b>
+        ou no editor de uma postagem. Limite de 3 MB por arquivo.
+      </p>
+      <div id="lista-galeria"></div>
     </section>
 
     <!-- ═════ agenda ═════ -->
@@ -516,7 +541,7 @@ if (!CONFIG.url || !CONFIG.anon) {
   if (!session) mostrar('tela-login');
 
   /* ═══════════ abas ═══════════ */
-  const SECOES = { posts:'secao-lista', conteudo:'secao-conteudo', areas:'secao-areas', faq:'secao-faq', agenda:'secao-agenda' };
+  const SECOES = { posts:'secao-lista', conteudo:'secao-conteudo', areas:'secao-areas', faq:'secao-faq', galeria:'secao-galeria', agenda:'secao-agenda' };
   let abaAtual = 'posts';
 
   $('abas').addEventListener('click', (e) => {
@@ -528,6 +553,7 @@ if (!CONFIG.url || !CONFIG.anon) {
     if (abaAtual === 'conteudo') carregarConteudo();
     if (abaAtual === 'areas')    carregarAreas();
     if (abaAtual === 'faq')      carregarFaq();
+    if (abaAtual === 'galeria')  carregarGaleria();
     if (abaAtual === 'agenda')   carregarAgenda();
     esconder('secao-agenda-editor');
     window.scrollTo(0, 0);
@@ -905,6 +931,81 @@ if (!CONFIG.url || !CONFIG.anon) {
     if (b.dataset.agPago) {
       await sb.from('agenda').update({ pago: true }).eq('id', b.dataset.agPago);
       avisar('Marcado como pago.'); return carregarAgenda();
+    }
+  });
+
+  /* ═══════════ galeria de imagens ═══════════ */
+  let arquivos = [];
+
+  async function carregarGaleria() {
+    const caixa = $('lista-galeria');
+    caixa.innerHTML = '<div class="vazio">Carregando…</div>';
+    const { data, error } = await sb.storage.from('site')
+      .list('', { limit: 200, sortBy: { column: 'created_at', order: 'desc' } });
+    if (error) { caixa.innerHTML = ''; return avisar('Não consegui listar: ' + error.message, true); }
+
+    arquivos = (data || []).filter(f => f.id);
+    if (!arquivos.length) {
+      caixa.innerHTML = '<div class="vazio"><p>Nenhuma imagem enviada ainda.</p>'
+        + '<p style="font-size:.85rem">Use “+ Enviar imagens” — depois é só copiar o endereço '
+        + 'e colar no campo que quiser, em Textos e imagens.</p></div>';
+      return;
+    }
+
+    caixa.innerHTML = '<div class="galeria">' + arquivos.map(f => {
+      const url = sb.storage.from('site').getPublicUrl(f.name).data.publicUrl;
+      const kb  = f.metadata && f.metadata.size ? Math.round(f.metadata.size / 1024) + ' KB' : '';
+      return '<figure class="foto">'
+        + '<img src="' + escapar(url) + '" alt="' + escapar(f.name) + '" loading="lazy">'
+        + '<figcaption>'
+        +   '<span title="' + escapar(f.name) + '">' + escapar(f.name.replace(/^\d+-/, '')) + '</span>'
+        +   '<span class="peso">' + kb + '</span>'
+        + '</figcaption>'
+        + '<div class="foto-acoes">'
+        +   '<button class="btn btn-s btn-min" data-copiar="' + escapar(url) + '" type="button">Copiar endereço</button>'
+        +   '<button class="btn btn-x btn-min" data-apagar-img="' + escapar(f.name) + '" type="button">Apagar</button>'
+        + '</div></figure>';
+    }).join('') + '</div>';
+  }
+
+  $('btn-enviar-imgs').addEventListener('click', () => $('arquivos-galeria').click());
+
+  $('arquivos-galeria').addEventListener('change', async () => {
+    const lista = Array.from($('arquivos-galeria').files);
+    if (!lista.length) return;
+    let enviadas = 0;
+    for (const arq of lista) {
+      if (arq.size > 3 * 1024 * 1024) { avisar(arq.name + ' passa de 3 MB — pulei.', true); continue; }
+      avisar('Enviando ' + (enviadas + 1) + ' de ' + lista.length + '…');
+      const nome = Date.now() + '-' + arq.name.toLowerCase().replace(/[^a-z0-9.]+/g, '-');
+      const { error } = await sb.storage.from('site').upload(nome, arq);
+      if (error) { avisar('Falhou em ' + arq.name + ': ' + error.message, true); continue; }
+      enviadas++;
+    }
+    $('arquivos-galeria').value = '';
+    avisar(enviadas + (enviadas === 1 ? ' imagem enviada.' : ' imagens enviadas.'));
+    carregarGaleria();
+  });
+
+  document.addEventListener('click', async (e) => {
+    const b = e.target.closest('button'); if (!b) return;
+
+    if (b.dataset.copiar) {
+      try {
+        await navigator.clipboard.writeText(b.dataset.copiar);
+        avisar('Endereço copiado. Cole no campo da imagem, em Textos e imagens.');
+      } catch (_) {
+        prompt('Copie o endereço:', b.dataset.copiar);
+      }
+    }
+
+    if (b.dataset.apagarImg) {
+      const nome = b.dataset.apagarImg;
+      if (!confirm('Apagar "' + nome + '"?\n\nSe alguma parte do site usa esta imagem, ela vai sumir de lá.')) return;
+      const { error } = await sb.storage.from('site').remove([nome]);
+      if (error) return avisar('Não consegui apagar: ' + error.message, true);
+      avisar('Imagem apagada.');
+      carregarGaleria();
     }
   });
 
