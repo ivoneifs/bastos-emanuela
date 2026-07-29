@@ -559,10 +559,22 @@ if (!CONFIG.url || !CONFIG.anon) {
     window.scrollTo(0, 0);
   });
 
+  /* cada tabela vem de um arquivo diferente — o aviso precisa apontar o certo */
+  const ARQUIVO_DE = {
+    posts:    'schema.sql',
+    conteudo: 'schema-2-conteudo.sql',
+    areas:    'schema-2-conteudo.sql',
+    faq:      'schema-2-conteudo.sql',
+    agenda:   'schema-3-agenda.sql'
+  };
+
   function faltaTabela(error, nome) {
-    return (error.code === 'PGRST205' || /schema cache/.test(error.message || ''))
-      ? 'A tabela "' + nome + '" ainda não existe. Rode o supabase/schema-2-conteudo.sql no SQL Editor.'
-      : 'Erro: ' + error.message;
+    if (error.code === 'PGRST205' || /schema cache/.test(error.message || '')) {
+      const arq = ARQUIVO_DE[nome] || 'schema.sql';
+      return 'A tabela "' + nome + '" ainda não existe. Rode o supabase/' + arq
+           + ' no SQL Editor do Supabase.';
+    }
+    return 'Erro: ' + error.message;
   }
 
   /* ═══════════ textos e imagens ═══════════ */
