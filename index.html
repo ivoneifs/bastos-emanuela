@@ -1071,22 +1071,21 @@
   </div>
 </div>
 
-<!-- ═══════════════════ BOTÃO FLUTUANTE DO MEET ═══════════════════
-     Só aparece quando o link da sala estiver preenchido no painel,
-     em Textos e imagens → Topo → Sala do Google Meet. -->
-<a id="btn-meet" href="#" data-c="contato.meet" target="_blank" rel="noopener"
-   class="group fixed right-5 z-50 hidden h-14 w-14 items-center justify-center rounded-full bg-white text-grafite shadow-lg ring-1 ring-salvia-200 transition-transform duration-300 hover:scale-105 sm:right-7"
-   style="bottom:5.5rem">
+<!-- ═══════════════════ BOTÃO FLUTUANTE DO GOOGLE MEET ═══════════════════
+     Abre o Meet na conta Google dela. Se quiser apontar para uma sala
+     fixa, é só preencher "Sala do Google Meet" no painel. -->
+<a id="btn-meet" href="https://meet.google.com/" data-c="contato.meet" target="_blank" rel="noopener"
+   class="group fixed right-5 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-white shadow-lg ring-1 ring-salvia-200 transition-transform duration-300 hover:scale-105 sm:right-7"
+   style="bottom:5.5rem" aria-label="Entrar na sessão por vídeo pelo Google Meet">
   <span class="sr-only">Entrar na sessão por vídeo</span>
-  <!-- ícone do Google Meet -->
-  <svg viewBox="0 0 24 24" class="h-7 w-7" aria-hidden="true">
-    <path fill="#00832d" d="M13.5 12 16 14.9l3.4 2.2.6-5.1-.6-5-3.5 1.9z"/>
-    <path fill="#0066da" d="M2 17.5V20a1 1 0 0 0 1 1h3.5l.7-2.6-.7-2.4-2.5-.7z"/>
-    <path fill="#e94235" d="M6.5 3 2 7.5l2.3.7.7-2.4 1.5-.6z"/>
-    <path fill="#2684fc" d="M6.5 7.5H2v9h4.5z"/>
-    <path fill="#00ac47" d="M20 5.6 16.5 8.5v6.4L20 17.8c.5.4 1.3.1 1.3-.6V6.2c0-.7-.8-1-1.3-.6z"/>
-    <path fill="#00ac47" d="M6.5 16.5V21h7a1 1 0 0 0 1-1v-3.5z"/>
-    <path fill="#ffba00" d="M13.5 3h-7v4.5h8V4a1 1 0 0 0-1-1z"/>
+  <!-- câmera do Google Meet -->
+  <svg viewBox="0 0 87 72" class="h-7 w-7" aria-hidden="true" focusable="false">
+    <path fill="#00832d" d="M49.5 36 57 44.6l10.1 6.4 1.7-14.9-1.7-14.6-10.3 5.6z"/>
+    <path fill="#0066da" d="M0 51.5V66a6 6 0 0 0 6 6h14.5l3-11-3-9.5-9.9-3z"/>
+    <path fill="#e94235" d="M20.5 0 0 20.5l10.6 3 9.9-3 3-9.4z"/>
+    <path fill="#2684fc" d="M20.5 20.5H0v31h20.5z"/>
+    <path fill="#00ac47" d="M82.6 8.2 67.1 20.9v30.1L82.7 63.8c2.3 1.8 5.7.2 5.7-2.8V11c0-3-3.5-4.6-5.8-2.8zM49.5 36v15.5h-29V72h40.6a6 6 0 0 0 6-6V51z"/>
+    <path fill="#ffba00" d="M60.1 0H20.5v20.5h29V36l17.6-15.1V6a6 6 0 0 0-6-6z"/>
   </svg>
 </a>
 
@@ -1236,8 +1235,6 @@ document.addEventListener('DOMContentLoaded', function () {
         el.removeAttribute('srcset');
       } else if (item.tipo === 'link') {
         el.setAttribute('href', item.valor);
-        /* o botão do Meet fica escondido até a sala ser cadastrada */
-        if (el.id === 'btn-meet') { el.classList.remove('hidden'); el.classList.add('flex'); }
       } else {
         el.textContent = item.valor;
       }

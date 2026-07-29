@@ -67,3 +67,10 @@ insert into public.conteudo (chave, valor, tipo, grupo, rotulo, dica, ordem) val
 ('marca.sigla',        'EB', 'texto', 'Topo', 'Iniciais dentro do círculo', 'Uma ou duas letras.', 0),
 ('rodape.emerg_txt2',  '(gratuito, 24 horas) ou procure a emergência mais próxima. Em risco imediato, ligue', 'textao', 'Rodapé', 'Aviso de emergência — final', null, 11)
 on conflict (chave) do nothing;
+
+
+-- ═══════════ sala do Google Meet ═══════════
+insert into public.conteudo (chave, valor, tipo, grupo, rotulo, dica, ordem) values
+('contato.meet', 'https://meet.google.com/', 'link', 'Topo', 'Botão do Google Meet',
+ 'Por padrão abre o Meet, para ela iniciar a chamada com a conta Google. Se tiver uma sala fixa, cole o endereço dela aqui.', 6)
+on conflict (chave) do nothing;
