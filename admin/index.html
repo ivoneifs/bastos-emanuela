@@ -561,11 +561,9 @@ if (!CONFIG.url || !CONFIG.anon) {
 
   /* cada tabela vem de um arquivo diferente — o aviso precisa apontar o certo */
   const ARQUIVO_DE = {
-    posts:    'schema.sql',
-    conteudo: 'schema-2-conteudo.sql',
-    areas:    'schema-2-conteudo.sql',
-    faq:      'schema-2-conteudo.sql',
-    agenda:   'schema-3-agenda.sql'
+    posts: 'schema-completo.sql', conteudo: 'schema-completo.sql',
+    areas: 'schema-completo.sql', faq: 'schema-completo.sql',
+    agenda: 'schema-completo.sql'
   };
 
   function faltaTabela(error, nome) {
